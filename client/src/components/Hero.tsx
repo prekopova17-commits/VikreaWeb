@@ -1,0 +1,93 @@
+import { Button } from "@/components/ui/button";
+import { TrendingUp, Target, CheckCircle2 } from "lucide-react";
+
+interface HeroProps {
+  onAuditClick: () => void;
+}
+
+export default function Hero({ onAuditClick }: HeroProps) {
+  return (
+    <section className="pt-32 lg:pt-40 pb-20 lg:pb-32 bg-background">
+      <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
+        <div className="max-w-5xl mx-auto text-center">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold leading-tight mb-6 text-foreground">
+            Stagnujúca firma?<br />
+            <span className="text-primary">Zmeníme to.</span>
+          </h1>
+          
+          <p className="text-lg lg:text-xl text-muted-foreground max-w-3xl mx-auto mb-12 leading-relaxed">
+            VyCrea transformuje stagnujúce a chaoticky rastúce SME firmy (50-100 ľudí) na systematické, ziskové organizácie. 
+            Nie len poradenstvom, ale <strong className="text-foreground">priamou implementáciou, kontrolou a dokopávaním</strong> majiteľov k výsledkom.
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12 max-w-4xl mx-auto">
+            <div className="flex flex-col items-center gap-3">
+              <div className="w-16 h-16 rounded-lg bg-[hsl(var(--orange-cta))]/10 flex items-center justify-center">
+                <TrendingUp className="w-8 h-8 text-[hsl(var(--orange-cta))]" strokeWidth={2.5} />
+              </div>
+              <div>
+                <div className="text-5xl lg:text-6xl font-extrabold text-[hsl(var(--orange-cta))] mb-1">+40%</div>
+                <div className="text-sm lg:text-base font-semibold text-muted-foreground">Zisk</div>
+              </div>
+            </div>
+
+            <div className="flex flex-col items-center gap-3">
+              <div className="w-16 h-16 rounded-lg bg-[hsl(var(--orange-cta))]/10 flex items-center justify-center">
+                <Target className="w-8 h-8 text-[hsl(var(--orange-cta))]" strokeWidth={2.5} />
+              </div>
+              <div>
+                <div className="text-5xl lg:text-6xl font-extrabold text-[hsl(var(--orange-cta))] mb-1">+60%</div>
+                <div className="text-sm lg:text-base font-semibold text-muted-foreground">Obrat</div>
+              </div>
+            </div>
+
+            <div className="flex flex-col items-center gap-3">
+              <div className="w-16 h-16 rounded-lg bg-primary/10 flex items-center justify-center">
+                <CheckCircle2 className="w-8 h-8 text-primary" strokeWidth={2.5} />
+              </div>
+              <div>
+                <div className="text-5xl lg:text-6xl font-extrabold text-primary mb-1">25</div>
+                <div className="text-sm lg:text-base font-semibold text-muted-foreground">Rokov</div>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <Button 
+              onClick={onAuditClick}
+              size="lg"
+              className="bg-[hsl(var(--orange-cta))] hover:bg-[hsl(var(--orange-cta))]/90 text-white font-semibold px-8 py-6 text-lg transition-all duration-200 hover:scale-105"
+              data-testid="button-hero-audit"
+            >
+              Odhaľte kritické priority
+            </Button>
+            <Button 
+              size="lg"
+              variant="outline"
+              className="border-primary text-primary hover:bg-primary hover:text-primary-foreground font-semibold px-8 py-6 text-lg transition-all duration-200"
+              asChild
+              data-testid="button-hero-contact"
+            >
+              <a href="mailto:lucia@vycrea.sk">Poďme si zavolať</a>
+            </Button>
+          </div>
+
+          <div className="mt-12 flex flex-wrap justify-center gap-6 text-sm text-muted-foreground">
+            <div className="flex items-center gap-2">
+              <CheckCircle2 className="w-4 h-4 text-[hsl(var(--mint-accent))]" />
+              <span>ISO 9001/14001</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <CheckCircle2 className="w-4 h-4 text-[hsl(var(--mint-accent))]" />
+              <span>25 rokov skúseností</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <CheckCircle2 className="w-4 h-4 text-[hsl(var(--mint-accent))]" />
+              <span>Preukazateľné výsledky</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
