@@ -1,10 +1,15 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { PopupModal } from "react-calendly";
 
 interface HeroProps {
   onAuditClick: () => void;
 }
 
 export default function Hero({ onAuditClick }: HeroProps) {
+  const [isCalendlyOpen, setIsCalendlyOpen] = useState(false);
+  const calendlyUrl = "https://calendly.com/vikrea/30min";
+
   return (
     <section className="pt-32 lg:pt-40 pb-20 lg:pb-32 bg-background relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-[hsl(var(--mint-accent))]/5 pointer-events-none" />
@@ -34,10 +39,10 @@ export default function Hero({ onAuditClick }: HeroProps) {
             <Button 
               size="lg"
               className="bg-[hsl(var(--orange-cta))] hover:bg-[hsl(var(--orange-cta))]/90 text-white font-semibold px-8 py-6 text-lg transition-all duration-200 hover:scale-105"
-              asChild
+              onClick={() => setIsCalendlyOpen(true)}
               data-testid="button-hero-contact"
             >
-              <a href="mailto:lucia@vycrea.sk">Poďme si zavolať</a>
+              Poďme si zavolať
             </Button>
             <Button 
               onClick={onAuditClick}
@@ -51,6 +56,13 @@ export default function Hero({ onAuditClick }: HeroProps) {
 
         </div>
       </div>
+
+      <PopupModal
+        url={calendlyUrl}
+        onModalClose={() => setIsCalendlyOpen(false)}
+        open={isCalendlyOpen}
+        rootElement={document.getElementById("root")!}
+      />
     </section>
   );
 }

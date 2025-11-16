@@ -1,4 +1,6 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { PopupModal } from "react-calendly";
 
 const situations = [
   {
@@ -19,6 +21,9 @@ const situations = [
 ];
 
 export default function Situations() {
+  const [isCalendlyOpen, setIsCalendlyOpen] = useState(false);
+  const calendlyUrl = "https://calendly.com/vikrea/30min";
+
   return (
     <section className="py-20 lg:py-32 bg-background">
       <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
@@ -57,13 +62,20 @@ export default function Situations() {
           <Button 
             size="lg"
             className="bg-[hsl(var(--orange-cta))] hover:bg-[hsl(var(--orange-cta))]/90 text-white font-semibold px-8 py-6 text-lg transition-all duration-200 hover:scale-105"
-            asChild
+            onClick={() => setIsCalendlyOpen(true)}
             data-testid="button-situations-contact"
           >
-            <a href="mailto:lucia@vycrea.sk">Poďme si zavolať</a>
+            Poďme si zavolať
           </Button>
         </div>
       </div>
+
+      <PopupModal
+        url={calendlyUrl}
+        onModalClose={() => setIsCalendlyOpen(false)}
+        open={isCalendlyOpen}
+        rootElement={document.getElementById("root")!}
+      />
     </section>
   );
 }

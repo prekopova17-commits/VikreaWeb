@@ -33,15 +33,31 @@ app.use(cors({
 }));
 
 // Security: HTTP headers with Helmet
+// Note: In development, Vite requires 'unsafe-inline' and 'unsafe-eval' for HMR
+const isDevelopment = process.env.NODE_ENV === 'development';
+
 app.use(helmet({
   contentSecurityPolicy: {
     directives: {
       defaultSrc: ["'self'"],
-      scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'", "https://assets.calendly.com"],
-      styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+      scriptSrc: [
+        "'self'",
+        "https://assets.calendly.com",
+        ...(isDevelopment ? ["'unsafe-inline'", "'unsafe-eval'"] : []),
+      ],
+      styleSrc: [
+        "'self'",
+        "'unsafe-inline'", // Required for Tailwind and inline styles
+        "https://fonts.googleapis.com"
+      ],
       fontSrc: ["'self'", "https://fonts.gstatic.com"],
       imgSrc: ["'self'", "data:", "https:", "blob:"],
-      connectSrc: ["'self'", "https://calendly.com", "wss:", "ws:"],
+      connectSrc: [
+        "'self'",
+        "https://calendly.com",
+        "https://api.calendly.com",
+        ...(isDevelopment ? ["ws:", "wss:"] : []),
+      ],
       frameSrc: ["'self'", "https://calendly.com"],
       objectSrc: ["'none'"],
       upgradeInsecureRequests: [],

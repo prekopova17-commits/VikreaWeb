@@ -84,6 +84,12 @@ export default function AuditWizard({ open, onClose }: AuditWizardProps) {
     onClose();
   };
 
+  const handleOpenChange = (open: boolean) => {
+    if (!open) {
+      handleClose();
+    }
+  };
+
   const progressPercentage = (currentStep / totalSteps) * 100;
 
   const stepTitles = [
@@ -96,7 +102,7 @@ export default function AuditWizard({ open, onClose }: AuditWizardProps) {
   ];
 
   return (
-    <Dialog open={open} onOpenChange={handleClose}>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto p-0">
         <VisuallyHidden>
           <DialogTitle>
