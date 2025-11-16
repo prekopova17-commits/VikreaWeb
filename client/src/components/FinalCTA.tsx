@@ -31,7 +31,7 @@ export default function FinalCTA({ onAuditClick }: FinalCTAProps) {
               onClick={onAuditClick}
               size="lg"
               variant="outline"
-              className="bg-transparent border-2 border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary font-semibold px-10 py-6 text-lg transition-all duration-200"
+              className="bg-white/10 border-2 border-white text-white hover:bg-white hover:text-primary font-semibold px-10 py-6 text-lg transition-all duration-200"
               data-testid="button-final-cta-audit"
             >
               Odhaľte kritické priority
