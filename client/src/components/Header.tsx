@@ -6,7 +6,7 @@ const navItems = [
   { label: "Problémy, ktoré riešim", href: "#situace" },
   { label: "Ako to funguje", href: "#ako-to-funguje" },
   { label: "Audit", href: "#audit" },
-  { label: "Služby", href: "#sluzby" },
+  { label: "Spolupráca", href: "#sluzby" },
   { label: "O mne", href: "#o-mne" },
   { label: "Kontakt", href: "#kontakt" },
 ];
