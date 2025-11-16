@@ -1,27 +1,30 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { Search, Lightbulb, Wrench, BarChart3 } from "lucide-react";
+import SystemsIcon from "@/components/icons/SystemsIcon";
+import GrowthIcon from "@/components/icons/GrowthIcon";
+import ControlIcon from "@/components/icons/ControlIcon";
+import ConnectionIcon from "@/components/icons/ConnectionIcon";
 
 const steps = [
   {
-    icon: Search,
+    icon: SystemsIcon,
     number: "01",
     title: "Diagnostika",
     description: "Identifikujeme slabé miesta v procesoch, prepojení oddelení, delegovaní a kontrole. Bez PowerPointov, priamo v teréne."
   },
   {
-    icon: Lightbulb,
+    icon: ConnectionIcon,
     number: "02",
     title: "Návrh",
     description: "Navrhneme konkrétne riešenia prispôsobené vašej firme. Prioritizujeme to, čo prinesie najväčší dopad na zisk."
   },
   {
-    icon: Wrench,
+    icon: GrowthIcon,
     number: "03",
     title: "Implementácia",
     description: "Nedodávame len plány. Implementujeme systémy priamo vo vašej firme. Nastavíme procesy, CRM, kontrolu dodávateľov."
   },
   {
-    icon: BarChart3,
+    icon: ControlIcon,
     number: "04",
     title: "Kontrola",
     description: "Weekly check-iny. Meranie výsledkov. Dokopávanie k zodpovednosti. Zostanem, dokým neuvidím +40% zisk."
@@ -50,14 +53,14 @@ export default function HowItWorks() {
                 className="border-card-border hover:shadow-lg hover:border-primary/20 transition-all duration-200 relative overflow-visible group"
                 data-testid={`card-step-${index}`}
               >
-                <CardContent className="p-8 pt-16 relative">
+                <CardContent className="p-8 pt-20 relative">
                   <div className="absolute inset-0 bg-gradient-to-br from-transparent to-primary/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
-                  <div className="absolute -top-6 left-8 z-10">
-                    <div className="w-14 h-14 rounded-lg bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center shadow-lg group-hover:shadow-xl group-hover:scale-110 transition-all duration-200">
-                      <Icon className="w-7 h-7 text-primary-foreground" strokeWidth={2.5} />
+                  <div className="absolute -top-12 left-1/2 -translate-x-1/2 z-10">
+                    <div className="w-24 h-24 rounded-xl bg-gradient-to-br from-primary to-primary/90 flex items-center justify-center p-5 shadow-lg group-hover:shadow-xl group-hover:scale-110 transition-all duration-200">
+                      <Icon className="w-full h-full" />
                     </div>
                   </div>
-                  <div className="relative z-10">
+                  <div className="relative z-10 text-center">
                     <div className="text-sm font-bold text-[hsl(var(--mint-accent))] mb-3">{step.number}</div>
                     <h3 className="text-xl font-bold text-foreground mb-3">{step.title}</h3>
                     <p className="text-muted-foreground leading-relaxed text-sm">{step.description}</p>
