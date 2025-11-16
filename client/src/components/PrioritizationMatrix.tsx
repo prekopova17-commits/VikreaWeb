@@ -45,13 +45,13 @@ export default function PrioritizationMatrix({ onAuditClick }: PrioritizationMat
   };
 
   return (
-    <section className="bg-white">
+    <section className="bg-[hsl(var(--mint-accent))]">
       <div className="container mx-auto px-4">
         <div className="max-w-[640px] mx-auto text-center pt-24 pb-16">
-          <h1 className="text-[42px] font-bold text-primary mb-8 leading-tight">
+          <h1 className="text-[42px] font-bold text-white mb-8 leading-tight">
             Zistite, čo brzdí rast vašej firmy
           </h1>
-          <p className="text-xl text-muted-foreground mb-8">
+          <p className="text-xl text-white/90 mb-8">
             9 otázok. 3 minúty. Jasná mapa priorít vo vašej emailovej schránke.
           </p>
           
@@ -107,7 +107,7 @@ export default function PrioritizationMatrix({ onAuditClick }: PrioritizationMat
               </div>
             )}
             
-            <p className="text-xs text-muted-foreground mt-2">
+            <p className="text-xs text-white/70 mt-2">
               Vyhľadávanie v Obchodnom registri SR
             </p>
           </div>
@@ -116,13 +116,13 @@ export default function PrioritizationMatrix({ onAuditClick }: PrioritizationMat
             <Button 
               onClick={onAuditClick}
               size="lg"
-              className="bg-[hsl(var(--orange-cta))] hover:bg-[hsl(var(--orange-cta))]/90 text-white font-semibold px-8 py-4 text-lg rounded-xl transition-colors duration-200"
+              className="bg-white hover:bg-white/90 text-[hsl(var(--orange-cta))] border-2 border-[hsl(var(--orange-cta))] font-semibold px-8 py-4 text-lg rounded-xl transition-all duration-200 hover:scale-105"
               data-testid="button-matrix-start"
             >
               Začať audit
             </Button>
           </div>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-white/80">
             Výsledok vidím iba ja a vy.
           </p>
         </div>

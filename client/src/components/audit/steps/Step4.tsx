@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { AuditData } from "../AuditWizard";
-import { ChevronLeft } from "lucide-react";
+import { Users } from "lucide-react";
 
 interface Step4Props {
   onNext: (data: Partial<AuditData>) => void;
@@ -36,10 +36,13 @@ export default function Step4({ onNext, onBack, data }: Step4Props) {
 
   return (
     <div className="space-y-8">
-      <div>
-        <h2 className="text-2xl lg:text-3xl font-bold text-foreground mb-4">
-          Ľudia & Výkon
-        </h2>
+      <div className="flex items-start gap-4">
+        <Users className="w-8 h-8 text-[hsl(var(--mint-accent))] flex-shrink-0" />
+        <div>
+          <h2 className="text-xl font-semibold text-foreground">
+            Ľudia & Výkon
+          </h2>
+        </div>
       </div>
 
       <div className="space-y-6">
@@ -114,16 +117,15 @@ export default function Step4({ onNext, onBack, data }: Step4Props) {
         <Button
           onClick={onBack}
           variant="outline"
-          className="w-32"
+          className="flex-1 border-2 border-primary text-primary font-semibold py-6"
           data-testid="button-step4-back"
         >
-          <ChevronLeft className="w-4 h-4 mr-2" />
           Späť
         </Button>
         <Button
           onClick={handleSubmit}
           disabled={!delegation || !departmentSpeed}
-          className="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold py-6"
+          className="flex-1 bg-[hsl(var(--orange-cta))] hover:bg-[hsl(var(--orange-cta))]/90 text-white font-semibold py-6"
           data-testid="button-step4-next"
         >
           Pokračovať

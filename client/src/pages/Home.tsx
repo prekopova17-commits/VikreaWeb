@@ -7,6 +7,7 @@ import Statistics from "@/components/Statistics";
 import PrioritizationMatrix from "@/components/PrioritizationMatrix";
 import PhotoPlaceholder from "@/components/PhotoPlaceholder";
 import Services from "@/components/Services";
+import ViKreaBanner from "@/components/ViKreaBanner";
 import About from "@/components/About";
 import FinalCTA from "@/components/FinalCTA";
 import Footer from "@/components/Footer";
@@ -26,6 +27,7 @@ export default function Home() {
       <PrioritizationMatrix onAuditClick={() => setShowAudit(true)} />
       <PhotoPlaceholder />
       <Services onAuditClick={() => setShowAudit(true)} />
+      <ViKreaBanner />
       <About />
       <FinalCTA onAuditClick={() => setShowAudit(true)} />
       <Footer />

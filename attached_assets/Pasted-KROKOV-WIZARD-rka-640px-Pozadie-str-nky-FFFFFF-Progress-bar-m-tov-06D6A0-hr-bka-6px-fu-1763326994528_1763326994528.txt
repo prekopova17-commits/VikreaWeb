@@ -1,0 +1,58 @@
+KROKOVÝ WIZARD
+Šírka: 640px Pozadie stránky: #FFFFFF Progress bar: mätová (#06D6A0), hrúbka 6px, full width Text progressu: Inter Medium 14px, #495057, margin-bottom 16px
+🔹 KROK 1/6: ZÁKLAD FIRMY
+Ikona: Lucide „Building“ v mätovej (#06D6A0), veľkosť 32px Card: biela, border 2px #E9ECEF, radius 16px, padding 32px
+[Otázka – Inter Semibold 20px, #212529]
+Koľko ľudí máte vo firme?
+Možnosti (single-select): – 1–20 – 20–50 – 50–100 – 100+
+UI správanie: – default: biely button s modrým outline (#1E40AF) – hover: výplň #1E40AF, text biely – selected: výplň #1E40AF, text biely
+[Pokračovať – primárny CTA]
+Button: Pokračovať (farba #FF6B35)
+[Späť] textový link v modrej (#1E40AF)
+🔹 KROK 2/6: PROCESY & SYSTÉM
+Ikona: Lucide „Settings“ v mätovej (#06D6A0)
+Otázka:
+Ako sú nastavené vaše procesy?
+Možnosti: – Nemáme popísané procesy – Máme popísané, ale ignorované – Robíme to, ale nekonzistentne – Máme funkčný systém
+Micro-copy (pod otázkou – gray 500): „Buďte úprimní. Toto určuje presnosť odporúčaní.“
+Otázka:
+Ako funguje prepojenie oddelení?
+Možnosti: – Každý si robí svoje – Posúvame si veci chaoticky – Máme pravidlá, ale slabé dodržiavanie – Funguje to dobre
+Buttons: Späť / Pokračovať
+🔹 KROK 3/6: OBCHOD, MARKETING, PRODUKT
+Ikona: Lucide „TrendingUp“ (#06D6A0)
+Otázka (multi-select):
+Kde unikajú príležitosti?
+Možnosti (checkbox): ☐ Slabý obchodný proces ☐ Slabé CRM ☐ Marketing mimo reality ☐ Málo viditeľný produkt ☐ Nestíhame realizáciu
+Otázka:
+Ako pracujete s klientmi?
+Možnosti: – Náhodne – Chaoticky – Postupy bez kontroly – Jasný sales proces
+🔹 KROK 4/6: ĽUDIA & VÝKON
+Ikona: Lucide „Users“ (#06D6A0)
+Otázka:
+Ako delegujete?
+Možnosti: – Majiteľ robí všetko sám – Delegujeme, ale bez termínu a kontroly – Delegujeme, ale výkon je nekonzistentný – Máme jasné role a zodpovednosti
+Otázka:
+Ako rýchlo reagujú oddelenia?
+Možnosti: – Pomaly – Bez štandardov – Dobré, nie vždy – Jasné SLA
+🔹 KROK 5/6: CIELE
+Ikona: Lucide „Target“ (#06D6A0)
+Otázka (multi-select):
+Čo chcete dosiahnuť v najbližších 6 mesiacoch?
+☐ Zvýšiť zisk ☐ Zlepšiť procesy ☐ Zaviesť kontrolu ☐ Posilniť obchod ☐ Posilniť marketing ☐ Zaviesť AI ☐ Zlepšiť výkon ľudí ☐ Najať ľudí
+🔹 KROK 6/6: EMAIL + GDPR
+Ikona: Lucide „Mail“ (#06D6A0)
+Nadpis:
+Kam vám máme poslať prioritnú mapu?
+Email input:
+– full width – border 2px #1E40AF – fokus: outline mätová (#06D6A0)
+GDPR checkbox:
+„Súhlasím so spracovaním osobných údajov pre zaslanie výsledkov mini-auditu.“
+CTA Button – oranžová (#FF6B35):
+Získať výsledky
+🟢 THANK-YOU OBRAZOVKA (po odoslaní)
+(len potvrdenie, celý výsledok ide emailom)
+Ikona: veľký mätový check (Lucide „CheckCircle“) Nadpis (modrá #1E40AF, 32px): Vaša prioritná mapa je na ceste
+Text: Poslali sme vám výsledky. Stačí otvoriť email – čakajú tam na vás.
+CTA 1 (oranžová): Poďme si zavolať
+CTA 2 (modrý outline): Napísať email

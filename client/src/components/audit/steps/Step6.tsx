@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { AuditData } from "../AuditWizard";
-import { ChevronLeft } from "lucide-react";
+import { Mail } from "lucide-react";
 
 interface Step6Props {
   onNext: (data: Partial<AuditData>) => void;
@@ -29,13 +29,13 @@ export default function Step6({ onNext, onBack, data }: Step6Props) {
 
   return (
     <div className="space-y-8">
-      <div>
-        <h2 className="text-2xl lg:text-3xl font-bold text-foreground mb-4">
-          Kam vám máme poslať prioritnú mapu?
-        </h2>
-        <p className="text-muted-foreground">
-          Zadajte váš email a dozvieme sa, na čo by ste sa mali zamerať
-        </p>
+      <div className="flex items-start gap-4">
+        <Mail className="w-8 h-8 text-[hsl(var(--mint-accent))] flex-shrink-0" />
+        <div>
+          <h2 className="text-xl font-semibold text-foreground mb-2">
+            Kam vám máme poslať prioritnú mapu?
+          </h2>
+        </div>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
@@ -77,10 +77,9 @@ export default function Step6({ onNext, onBack, data }: Step6Props) {
             type="button"
             onClick={onBack}
             variant="outline"
-            className="w-32"
+            className="flex-1 border-2 border-primary text-primary font-semibold py-6"
             data-testid="button-step6-back"
           >
-            <ChevronLeft className="w-4 h-4 mr-2" />
             Späť
           </Button>
           <Button

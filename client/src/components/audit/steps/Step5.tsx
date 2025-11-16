@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { AuditData } from "../AuditWizard";
-import { ChevronLeft } from "lucide-react";
+import { Target } from "lucide-react";
 
 interface Step5Props {
   onNext: (data: Partial<AuditData>) => void;
@@ -41,17 +41,19 @@ export default function Step5({ onNext, onBack, data }: Step5Props) {
 
   return (
     <div className="space-y-8">
-      <div>
-        <h2 className="text-2xl lg:text-3xl font-bold text-foreground mb-4">
-          Ciele
-        </h2>
-        <p className="text-muted-foreground">
-          Vyberte možnosti, ktoré chcete dosiahnuť
-        </p>
+      <div className="flex items-start gap-4">
+        <Target className="w-8 h-8 text-[hsl(var(--mint-accent))] flex-shrink-0" />
+        <div>
+          <h2 className="text-xl font-semibold text-foreground mb-2">
+            Ciele
+          </h2>
+          <p className="text-muted-foreground text-sm">
+            Čo chcete dosiahnuť v najbližších 6 mesiacoch?
+          </p>
+        </div>
       </div>
 
       <div>
-        <h3 className="font-semibold text-foreground mb-4">Čo chcete dosiahnuť v najbližších 6 mesiacoch?</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {goalOptions.map((option) => (
             <Card
@@ -80,16 +82,15 @@ export default function Step5({ onNext, onBack, data }: Step5Props) {
         <Button
           onClick={onBack}
           variant="outline"
-          className="w-32"
+          className="flex-1 border-2 border-primary text-primary font-semibold py-6"
           data-testid="button-step5-back"
         >
-          <ChevronLeft className="w-4 h-4 mr-2" />
           Späť
         </Button>
         <Button
           onClick={handleSubmit}
           disabled={goals.length === 0}
-          className="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold py-6"
+          className="flex-1 bg-[hsl(var(--orange-cta))] hover:bg-[hsl(var(--orange-cta))]/90 text-white font-semibold py-6"
           data-testid="button-step5-next"
         >
           Pokračovať

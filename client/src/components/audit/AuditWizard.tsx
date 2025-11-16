@@ -62,10 +62,10 @@ export default function AuditWizard({ open, onClose }: AuditWizardProps) {
     <Dialog open={open} onOpenChange={handleClose}>
       <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto p-0">
         {currentStep <= totalSteps && (
-          <div className="sticky top-0 bg-background z-10 border-b border-border">
-            <div className="flex items-center justify-between p-4 pb-2">
-              <div className="text-sm font-semibold text-muted-foreground">
-                KROK {currentStep}/{totalSteps}
+          <div className="sticky top-0 bg-background z-10">
+            <div className="flex items-center justify-between px-6 pt-6 pb-4">
+              <div className="text-sm font-medium text-muted-foreground">
+                Krok {currentStep} z {totalSteps}
               </div>
               <Button
                 variant="ghost"
@@ -77,11 +77,13 @@ export default function AuditWizard({ open, onClose }: AuditWizardProps) {
                 <X className="h-5 w-5" />
               </Button>
             </div>
-            <Progress 
-              value={progressPercentage} 
-              className="h-1 rounded-none"
-              data-testid="progress-audit"
-            />
+            <div className="w-full bg-border/30">
+              <div 
+                className="h-1.5 bg-[hsl(var(--mint-accent))] transition-all duration-300"
+                style={{ width: `${progressPercentage}%` }}
+                data-testid="progress-audit"
+              />
+            </div>
           </div>
         )}
 
