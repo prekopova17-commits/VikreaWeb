@@ -2,9 +2,9 @@ import { useState, Suspense, lazy } from "react";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import Situations from "@/components/Situations";
-import Statistics from "@/components/Statistics";
 import HowItWorks from "@/components/HowItWorks";
-import Results from "@/components/Results";
+import Statistics from "@/components/Statistics";
+import PhotoPlaceholder from "@/components/PhotoPlaceholder";
 import Services from "@/components/Services";
 import About from "@/components/About";
 import FinalCTA from "@/components/FinalCTA";
@@ -20,9 +20,9 @@ export default function Home() {
       <Header />
       <Hero onAuditClick={() => setShowAudit(true)} />
       <Situations />
-      <Statistics />
       <HowItWorks />
-      <Results />
+      <Statistics />
+      <PhotoPlaceholder />
       <Services onAuditClick={() => setShowAudit(true)} />
       <About />
       <FinalCTA onAuditClick={() => setShowAudit(true)} />

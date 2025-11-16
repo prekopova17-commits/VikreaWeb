@@ -3,8 +3,7 @@ const results = [
   { value: "+60%", label: "Obrat", progress: 0.85 },
   { value: "–35%", label: "Náklady", progress: 0.65 },
   { value: "2", label: "Strategické pozície", progress: 0.5, isSmallText: true },
-  { value: "ISO", label: "Zavedenie procesov", progress: 0.7, isSmallText: true },
-  { value: "25", label: "Rokov", progress: 0.65 }
+  { value: "ISO", label: "Zavedenie procesov", progress: 0.7, isSmallText: true }
 ];
 
 export default function Statistics() {
@@ -20,7 +19,7 @@ export default function Statistics() {
           </p>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 lg:gap-6 max-w-7xl mx-auto mb-16">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 lg:gap-8 max-w-6xl mx-auto mb-16">
           {results.map((result, index) => (
             <div key={index} className="flex flex-col items-center">
               <div className="relative w-36 h-36 lg:w-40 lg:h-40">
