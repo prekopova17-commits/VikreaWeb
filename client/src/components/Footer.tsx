@@ -4,28 +4,28 @@ export default function Footer() {
       <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
           <div>
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-primary-foreground font-bold text-lg">
-                VK
-              </div>
-              <span className="font-bold text-xl">ViKrea</span>
+            <div className="mb-4">
+              <h3 className="font-bold text-xl mb-2">ViKrea</h3>
+              <p className="text-white/90 text-base leading-relaxed mb-3">
+                Systémy. Výsledky. Žiadne výhovorky.
+              </p>
+              <p className="text-white/70 text-sm">
+                ISO 9001/14001 • 25 rokov skúseností
+              </p>
             </div>
-            <p className="text-white/70 text-sm leading-relaxed">
-              Kreatívna business agentúra zameraná na systematický rast SME firiem.
-            </p>
           </div>
 
           <div>
             <h3 className="font-bold text-lg mb-4">Kontakt</h3>
             <ul className="space-y-2 text-sm text-white/70">
               <li>
-                <a href="mailto:lucia@vycrea.sk" className="hover:text-white transition-colors" data-testid="link-footer-email">
-                  lucia@vycrea.sk
+                <a href="mailto:prekopova17@gmail.com" className="hover:text-white transition-colors" data-testid="link-footer-email">
+                  prekopova17@gmail.com
                 </a>
               </li>
               <li>
-                <a href="tel:+421000000000" className="hover:text-white transition-colors" data-testid="link-footer-phone">
-                  +421 XXX XXX XXX
+                <a href="tel:+421905400026" className="hover:text-white transition-colors" data-testid="link-footer-phone">
+                  +421 905 400 026
                 </a>
               </li>
             </ul>
@@ -40,10 +40,9 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <span>ISO 9001/14001</span>
-              </li>
-              <li>
-                <span>25 rokov skúseností</span>
+                <a href="#" className="hover:text-white transition-colors" data-testid="link-footer-legal">
+                  Právne informácie
+                </a>
               </li>
             </ul>
           </div>
