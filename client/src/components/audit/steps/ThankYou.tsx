@@ -1,11 +1,17 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { CheckCircle2 } from "lucide-react";
+import { PopupModal } from "react-calendly";
 
 interface ThankYouProps {
   onClose: () => void;
 }
 
 export default function ThankYou({ onClose }: ThankYouProps) {
+  const [isCalendlyOpen, setIsCalendlyOpen] = useState(false);
+  
+  const calendlyUrl = import.meta.env.VITE_CALENDLY_URL || "https://calendly.com/";
+
   return (
     <div className="text-center space-y-8 py-12">
       <div className="flex justify-center">
@@ -27,10 +33,10 @@ export default function ThankYou({ onClose }: ThankYouProps) {
         <Button
           size="lg"
           className="bg-[hsl(var(--orange-cta))] hover:bg-[hsl(var(--orange-cta))]/90 text-white font-semibold px-8"
-          asChild
+          onClick={() => setIsCalendlyOpen(true)}
           data-testid="button-thankyou-call"
         >
-          <a href="mailto:lucia@vycrea.sk">Poďme si zavolať</a>
+          Poďme si zavolať
         </Button>
         <Button
           size="lg"
@@ -39,7 +45,7 @@ export default function ThankYou({ onClose }: ThankYouProps) {
           asChild
           data-testid="button-thankyou-email"
         >
-          <a href="mailto:lucia@vycrea.sk">Napísať email</a>
+          <a href="mailto:lucia@vikrea.sk">Napísať email</a>
         </Button>
       </div>
 
@@ -51,6 +57,13 @@ export default function ThankYou({ onClose }: ThankYouProps) {
       >
         Zavrieť
       </Button>
+
+      <PopupModal
+        url={calendlyUrl}
+        onModalClose={() => setIsCalendlyOpen(false)}
+        open={isCalendlyOpen}
+        rootElement={document.getElementById("root")!}
+      />
     </div>
   );
 }

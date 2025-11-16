@@ -1,0 +1,470 @@
+﻿import React, { useState } from "react";
+import { CheckCircle, Settings, Users, TrendingUp, Mail } from "lucide-react";
+
+
+/*
+  Mini-audit React prototype for VyCrea
+  - 6-step wizard
+  - scoring for 4 pillars: Processes, Sales/Marketing/Product, People/Performance, Growth/Strategy
+  - Top-3 prioritization and 3-level recommendations per pillar
+  - Email capture + GDPR checkbox
+  - Placeholder webhook for Google Sheets / Brevo
+
+
+  HOW TO USE
+  - Drop this component into a React app (Next.js / CRA)
+  - Include TailwindCSS
+  - Replace WEBHOOK_URL with your real endpoint to store leads (see note below)
+  - Recommendations are editable in the `RECOMMENDATIONS` constant (for CMS integration)
+
+
+  NOTE ABOUT ENV: In some runtime environments (client-side browsers or certain sandboxes)
+  `process` may be undefined. This file uses a safe check so it won't throw when `process` is not available.
+*/
+
+
+// Safe access to environment variable. If `process` is not defined (browser sandbox), this will resolve to "".
+const WEBHOOK_URL = (typeof process !== 'undefined' && process.env && process.env.NEXT_PUBLIC_AUDIT_WEBHOOK) ? process.env.NEXT_PUBLIC_AUDIT_WEBHOOK : "";
+
+
+// Default (editable) recommendations - keep these texts in Slovak (vykanie)
+// For CMS integration: export this object to CMS and fetch at runtime instead of hard-coded.
+const RECOMMENDATIONS = {
+  processes: {
+    1: {
+      title: "Procesy – kritický stav",
+      text: "Popíšeme všetky opakované činnosti a nastavíme jasné štandardy. Bez toho budete rásť do chaosu — nie do zisku. Pripravím vám procesný základ tak, aby ho každý vedel používať a kontrolovať v bežnej praxi."
+    },
+    2: {
+      title: "Procesy – stredný problém",
+      text: "Zavedieme kontrolný cyklus a reporting, aby systémy neboli len 'na papieri'. Tým zabezpečíme, že vaši ľudia budú pracovať rovnako a výsledky budú predvídateľné."
+    },
+    3: {
+      title: "Procesy – mierny problém",
+      text: "Vybudujeme prepojený workflow marketing → obchod → realizácia, aby informácie nepadali medzi stoličky. Zabránime duplicite práce a stratám informácií."
+    }
+  },
+  sales: {
+    1: {
+      title: "Obchod & marketing – kritický stav",
+      text: "Nastavíme jasný obchodný postup krok za krokom a prepojíme marketing tak, aby generoval reálne dopyty, nie len obsah. Bez toho vám uniká najviac peňazí."
+    },
+    2: {
+      title: "Obchod & marketing – stredný problém",
+      text: "Zjednotíme obchodné aktivity (CRM, reporting, kvalifikácia leadov) a nastavíme marketing podľa potrieb obchodu, nie podľa kreatívnych nápadov."
+    },
+    3: {
+      title: "Obchod & marketing – mierny problém",
+      text: "Urobíme audit produktovej ponuky, vyjasníme USP a nastavíme viditeľnosť tak, aby bolo jasné, prečo má zákazník vybrať práve vás."
+    }
+  },
+  people: {
+    1: {
+      title: "Ľudia & výkon – kritický stav",
+      text: "Rozdelíme zodpovednosti, nastavíme jasné kompetencie a kontrolu výkonu. Bez tohto nebude fungovať nič — ani procesy, ani rast."
+    },
+    2: {
+      title: "Ľudia & výkon – stredný problém",
+      text: "Zavedieme pevné očakávania pre jednotlivé role, postavíme reporting a nastavíme spätnú väzbu tak, aby ľudia pracovali rovnako každý týždeň."
+    },
+    3: {
+      title: "Ľudia & výkon – mierny problém",
+      text: "Nastavíme rytmus stretnutí, odovzdávacích protokolov a pravidiel komunikácie, aby celá firma ťahala rovnakým smerom."
+    }
+  },
+  growth: {
+    1: {
+      title: "Rast & stratégia – kritický stav",
+      text: "Nastavíme jasné 3–5 strategických cieľov na 6 mesiacov a konkrétne kroky, ktoré k nim vedú. Bez smeru sa rast mení na chaos."
+    },
+    2: {
+      title: "Rast & stratégia – stredný problém",
+      text: "Vyberieme najkritickejšiu oblasť, ktorá brzdí škálovanie, a nastavíme roadmapu — postupnosť krokov, čo treba riešiť ako prvé."
+    },
+    3: {
+      title: "Rast & stratégia – mierny problém",
+      text: "Identifikujeme možnosti expanzie (B2B, nové produkty, nové trhy) a pripravíme plán, ktorý bude realistický a udržateľný."
+    }
+  }
+};
+
+
+// Questions and mapping to pillar scoring. Each option returns an object with pillar weights.
+const QUESTIONS = [
+  // Step 1
+  {
+    id: "size",
+    title: "Koľko ľudí máte vo firme?",
+    type: "single",
+    options: [
+      { id: "1-20", label: "1–20", value: { processes: 1, sales: 1, people: 1, growth: 1 } },
+      { id: "20-50", label: "20–50", value: { processes: 1, sales: 1, people: 2, growth: 1 } },
+      { id: "50-100", label: "50–100", value: { processes: 2, sales: 2, people: 2, growth: 2 } },
+      { id: "100+", label: "100+", value: { processes: 3, sales: 3, people: 3, growth: 3 } }
+    ]
+  },
+  {
+    id: "growth_state",
+    title: "Ako by ste opísali aktuálny rast?",
+    type: "single",
+    options: [
+      { id: "stagnate", label: "Stagnujeme", value: { processes: 1, sales: 1, people: 1, growth: 1 } },
+      { id: "slow", label: "Pomalý rast", value: { processes: 1, sales: 2, people: 1, growth: 2 } },
+      { id: "chaos", label: "Chaotický rast", value: { processes: 3, sales: 3, people: 3, growth: 3 } },
+      { id: "unknown", label: "Nevieme povedať", value: { processes: 2, sales: 2, people: 2, growth: 2 } }
+    ]
+  },
+  // Step 2
+  {
+    id: "processes",
+    title: "Ako sú nastavené vaše procesy?",
+    type: "single",
+    options: [
+      { id: "none", label: "Nemáme popísané procesy", value: { processes: 3 } },
+      { id: "doc_but_ignore", label: "Máme popísané, ale ignorované", value: { processes: 3 } },
+      { id: "inconsistent", label: "Robíme to, ale nekonzistentne", value: { processes: 2 } },
+      { id: "functional", label: "Máme funkčný systém", value: { processes: 1 } }
+    ]
+  },
+  {
+    id: "handoff",
+    title: "Ako funguje prepojenie oddelení?",
+    type: "single",
+    options: [
+      { id: "each_own", label: "Každý si robí svoje", value: { processes: 3 } },
+      { id: "chaotic", label: "Posúvame si veci chaoticky", value: { processes: 3 } },
+      { id: "rules_but_weak", label: "Máme pravidlá, ale slabé dodržiavanie", value: { processes: 2 } },
+      { id: "works", label: "Funguje to dobre", value: { processes: 1 } }
+    ]
+  },
+  // Step 3
+  {
+    id: "leaks",
+    title: "Kde unikajú príležitosti?",
+    type: "multi",
+    options: [
+      { id: "weak_sales", label: "Slabý obchodný proces", value: { sales: 3 } },
+      { id: "weak_crm", label: "Slabé CRM", value: { sales: 2 } },
+      { id: "marketing_off", label: "Marketing mimo reality", value: { sales: 2 } },
+      { id: "low_visibility", label: "Malo viditeľný produkt", value: { sales: 2 } },
+      { id: "capacity", label: "Nestíhame realizáciu", value: { sales: 2, processes: 2 } }
+    ]
+  },
+  {
+    id: "client_flow",
+    title: "Ako pracujete s klientmi?",
+    type: "single",
+    options: [
+      { id: "random", label: "Náhodne", value: { sales: 3 } },
+      { id: "chaotic_ops", label: "Chaoticky", value: { sales: 3 } },
+      { id: "procedural", label: "Postupy bez kontroly", value: { sales: 2 } },
+      { id: "clear_sales", label: "Jasný sales proces", value: { sales: 1 } }
+    ]
+  },
+  // Step 4
+  {
+    id: "delegation",
+    title: "Ako delegujete?",
+    type: "single",
+    options: [
+      { id: "owner_all", label: "Majiteľ robí všetko sám", value: { people: 3 } },
+      { id: "delegate_no_term", label: "Delegujeme, ale bez termínu a kontroly", value: { people: 3 } },
+      { id: "delegate_inconsistent", label: "Delegujeme, ale výkon je nekonzistentný", value: { people: 2 } },
+      { id: "clear_roles", label: "Máme jasné role a zodpovednosti", value: { people: 1 } }
+    ]
+  },
+  {
+    id: "response_speed",
+    title: "Ako rýchlo reagujú oddelenia?",
+    type: "single",
+    options: [
+      { id: "slow", label: "Pomaly", value: { people: 3 } },
+      { id: "no_standards", label: "Bez štandardov", value: { people: 2 } },
+      { id: "good_but", label: "Dobré, nie vždy", value: { people: 2 } },
+      { id: "sla", label: "Máme jasné pravidlá reakčných časov", value: { people: 1 } }
+    ]
+  },
+  // Step 5
+  {
+    id: "goals",
+    title: "Čo chcete dosiahnuť v najbližších 6 mesiacoch?",
+    type: "multi",
+    options: [
+      { id: "increase_margin", label: "Zvýšiť zisk", value: { growth: 2 } },
+      { id: "improve_process", label: "Zlepšiť procesy", value: { growth: 2, processes: 2 } },
+      { id: "setup_control", label: "Zaviesť kontrolu", value: { growth: 2, processes: 2 } },
+      { id: "boost_sales", label: "Posilniť obchod", value: { growth: 2, sales: 2 } },
+      { id: "fix_marketing", label: "Riešiť marketing", value: { growth: 2, sales: 2 } },
+      { id: "ai", label: "Zaviesť AI", value: { growth: 2 } },
+      { id: "team", label: "Zlepšiť výkon ľudí", value: { growth: 2, people: 2 } },
+      { id: "hire", label: "Najať ľudí", value: { growth: 2, people: 2 } }
+    ]
+  },
+  // Step 6
+  {
+    id: "email",
+    title: "Kam vám máme poslať prioritnú mapu?",
+    type: "email",
+    options: []
+  }
+];
+
+
+function sumScores(answers) {
+  const pillars = { processes: 0, sales: 0, people: 0, growth: 0 };
+  Object.values(answers).forEach((ans) => {
+    if (!ans) return;
+    if (Array.isArray(ans)) {
+      ans.forEach((a) => {
+        // a is option object
+        Object.keys(a.value || {}).forEach((p) => (pillars[p] += a.value[p]));
+      });
+    } else if (ans.value) {
+      Object.keys(ans.value).forEach((p) => (pillars[p] += ans.value[p]));
+    }
+  });
+  return pillars;
+}
+
+
+function mapLevel(score) {
+  // score thresholds are empirical — adjust in CMS if needed
+  if (score >= 8) return 1; // critical
+  if (score >= 5) return 2; // medium
+  return 3; // mild/opportunity
+}
+
+
+export default function MiniAuditApp() {
+  const [step, setStep] = useState(0);
+  const [answers, setAnswers] = useState({});
+  const [email, setEmail] = useState("");
+  const [gdpr, setGdpr] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const totalSteps = QUESTIONS.length;
+
+
+  const current = QUESTIONS[step];
+
+
+  function selectSingle(qId, option) {
+    setAnswers((s) => ({ ...s, [qId]: option }));
+  }
+
+
+  function toggleMulti(qId, option) {
+    setAnswers((s) => {
+      const exists = (s[qId] || []).find((o) => o.id === option.id);
+      if (exists) return { ...s, [qId]: (s[qId] || []).filter((o) => o.id !== option.id) };
+      return { ...s, [qId]: [...(s[qId] || []), option] };
+    });
+  }
+
+
+  function canContinue() {
+    if (!current) return false;
+    const ans = answers[current.id];
+    if (current.type === "multi") return Array.isArray(ans) && ans.length > 0;
+    if (current.type === "email") return email && gdpr;
+    return !!ans;
+  }
+
+
+  function next() {
+    if (step < totalSteps - 1) setStep((s) => s + 1);
+  }
+  function back() {
+    if (step > 0) setStep((s) => s - 1);
+  }
+
+
+  function finalizeAndSend() {
+    const pillars = sumScores(answers);
+    const ranked = Object.entries(pillars)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 3)
+      .map(([key, score]) => ({ key, score, level: mapLevel(score) }));
+
+
+    const payload = {
+      email,
+      gdpr,
+      answers: Object.keys(answers).reduce((acc, k) => {
+        const v = answers[k];
+        if (!v) return acc;
+        if (Array.isArray(v)) acc[k] = v.map((o) => o.id);
+        else acc[k] = v.id || v;
+        return acc;
+      }, {}),
+      pillars,
+      prioritized: ranked,
+      sentAt: new Date().toISOString()
+    };
+
+
+    setSubmitting(true);
+
+
+    // If webhook provided, try to POST. Otherwise simulate and show confirmation
+    if (WEBHOOK_URL) {
+      fetch(WEBHOOK_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      })
+        .then((r) => {
+          console.log("Webhook response", r.status);
+          setSubmitting(false);
+          setSubmitted(true);
+        })
+        .catch((e) => {
+          console.error(e);
+          setSubmitting(false);
+          setSubmitted(true);
+        });
+    } else {
+      // simulate: in real use replace with webhook that adds row to Google Sheets
+      console.log("AUDIT PAYLOAD (simulate)", payload);
+      setTimeout(() => {
+        setSubmitting(false);
+        setSubmitted(true);
+      }, 800);
+    }
+  }
+
+
+  if (submitted) {
+    // compute pillars & prioritized once more to render the summary preview
+    const pillars = sumScores(answers);
+    const ranked = Object.entries(pillars)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 3)
+      .map(([key, score]) => ({ key, score, level: mapLevel(score) }));
+
+
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-white p-6">
+        <div className="max-w-xl w-full text-center">
+          <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-emerald-100 mx-auto mb-6">
+            <CheckCircle size={48} className="text-emerald-600" />
+          </div>
+
+
+          <h2 className="text-3xl font-bold text-[#1E40AF] mb-4">Vaša prioritná mapa je na ceste</h2>
+          <p className="text-gray-600 mb-6">Poslali sme vám výsledky na email {email}. Skontrolujte schránku — odporúčania už tam čakajú.</p>
+
+
+          <div className="grid grid-cols-1 gap-4 mb-6">
+            {ranked.map((r, i) => {
+              const rec = RECOMMENDATIONS[r.key][r.level];
+              return (
+                <div key={r.key} className="bg-white p-4 rounded-lg border shadow-sm text-left">
+                  <div className="text-sm text-[#06D6A0] font-semibold mb-1">PRIORITA {i + 1}</div>
+                  <div className="text-lg font-bold text-[#1E40AF] mb-2">{rec.title}</div>
+                  <div className="text-gray-700">{rec.text}</div>
+                </div>
+              );
+            })}
+          </div>
+
+
+          <div className="flex gap-3 justify-center">
+            <a href="mailto:lucia@vycrea.sk" className="px-6 py-3 rounded-lg border-2 border-[#1E40AF] text-[#1E40AF] hover:bg-[#F8FAFF]">Napísať email</a>
+            <a href="#" className="px-6 py-3 rounded-lg bg-[#FF6B35] text-white font-semibold">Poďme si zavolať</a>
+          </div>
+
+
+          <p className="text-xs text-gray-400 mt-6">Výsledok vidím iba ja a vy.</p>
+        </div>
+      </div>
+    );
+  }
+
+
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-white p-6">
+      <div className="max-w-lg w-full">
+        <div className="text-center mb-8">
+          <h1 className="text-4xl font-bold text-[#1E40AF]">Zistite, čo brzdí rast vašej firmy</h1>
+          <p className="text-gray-600 mt-3">9 otázok. 3 minúty. Jasná mapa priorít vo vašej emailovej schránke.</p>
+          <div className="text-sm text-gray-400 mt-2">Výsledok vidím iba ja a vy.</div>
+        </div>
+
+
+        <div className="mb-4">
+          <div className="w-full bg-[#F8FAFB] rounded-full h-2 overflow-hidden mb-3">
+            <div className="h-2 rounded-full bg-[#06D6A0]" style={{ width: `${Math.round(((step + 1) / totalSteps) * 100)}%` }} />
+          </div>
+          <div className="text-sm text-gray-500">Krok {Math.min(step + 1, totalSteps)} / {totalSteps}</div>
+        </div>
+
+
+        <div className="bg-white border-2 border-[#E9ECEF] rounded-xl p-6 shadow-sm">
+          <div className="flex items-start gap-4 mb-4">
+            <div className="p-2 rounded-md bg-[#E6F7EE]">
+              {/* small icon by step */}
+              {step < 2 && <Settings size={20} className="text-[#06D6A0]" />}
+              {step === 2 && <TrendingUp size={20} className="text-[#06D6A0]" />}
+              {step === 3 && <Users size={20} className="text-[#06D6A0]" />}
+              {step >= 4 && <Mail size={20} className="text-[#06D6A0]" />}
+            </div>
+            <div className="flex-1">
+              <div className="text-lg font-semibold text-[#212529] mb-2">{current.title}</div>
+
+
+              {/* Options rendering */}
+              <div className="space-y-3">
+                {current.type === "single" && current.options.map((opt) => {
+                  const selected = answers[current.id] && answers[current.id].id === opt.id;
+                  return (
+                    <button key={opt.id} onClick={() => selectSingle(current.id, opt)} className={`w-full text-left px-4 py-3 rounded-lg border ${selected ? 'bg-[#1E40AF] text-white border-transparent' : 'bg-white text-[#212529] border-[#E9ECEF]'} hover:shadow-sm`}> {opt.label} </button>
+                  );
+                })}
+
+
+                {current.type === "multi" && current.options.map((opt) => {
+                  const checked = (answers[current.id] || []).find((o) => o.id === opt.id);
+                  return (
+                    <label key={opt.id} className="flex items-center gap-3 border p-3 rounded-lg cursor-pointer">
+                      <input type="checkbox" checked={!!checked} onChange={() => toggleMulti(current.id, opt)} className="w-4 h-4" />
+                      <span className="text-sm">{opt.label}</span>
+                    </label>
+                  );
+                })}
+
+
+                {current.type === "email" && (
+                  <div className="space-y-3">
+                    <input value={email} onChange={(e) => setEmail(e.target.value)} placeholder="tvoj@email.sk" className="w-full px-4 py-3 border-2 rounded-lg focus:outline-none" />
+                    <label className="flex items-center gap-3 text-sm">
+                      <input type="checkbox" checked={gdpr} onChange={(e) => setGdpr(e.target.checked)} />
+                      <span className="text-gray-600">Súhlasím so spracovaním osobných údajov pre zaslanie výsledkov mini-auditu.</span>
+                    </label>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+
+
+          <div className="flex items-center justify-between mt-6">
+            <button onClick={back} disabled={step === 0} className="text-[#1E40AF]">Späť</button>
+
+
+            {step === totalSteps - 1 ? (
+              <button disabled={!canContinue() || submitting} onClick={finalizeAndSend} className={`px-5 py-3 rounded-lg text-white font-semibold ${canContinue() ? 'bg-[#FF6B35]' : 'bg-[#FFBEA6]'} `}>
+                {submitting ? 'Odosielam...' : 'Získať výsledky'}
+              </button>
+            ) : (
+              <button disabled={!canContinue()} onClick={next} className={`px-5 py-3 rounded-lg text-white font-semibold ${canContinue() ? 'bg-[#FF6B35]' : 'bg-[#FFBEA6]'} `}>Pokračovať</button>
+            )}
+          </div>
+        </div>
+
+
+        <div className="text-xs text-gray-400 mt-4">Tip: Odpoveďami získate presnú prioritu. Buďte úprimní.</div>
+      </div>
+    </div>
+  );
+}

@@ -21,7 +21,7 @@ const speedOptions = [
   { value: "slow", label: "Pomalý" },
   { value: "no-standards", label: "Bez štandardov" },
   { value: "sometimes", label: "Dobré, nie vždy" },
-  { value: "clear-sla", label: "Jasné SLA" }
+  { value: "clear-sla", label: "Máme jasné pravidlá reakčných časov" }
 ];
 
 export default function Step4({ onNext, onBack, data }: Step4Props) {
