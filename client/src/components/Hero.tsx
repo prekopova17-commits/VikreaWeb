@@ -22,7 +22,7 @@ export default function Hero({ onAuditClick }: HeroProps) {
           <div className="mb-12 max-w-4xl mx-auto">
             <div className="aspect-[16/9] rounded-2xl overflow-hidden">
               <img 
-                src="/attached_assets/Generated Image November 16, 2025 - 5_23PM_1763324068747.png"
+                src="/images/hero.png"
                 alt="Lucia Prekopová - Business Consultant"
                 className="w-full h-full object-cover"
                 data-testid="img-hero"

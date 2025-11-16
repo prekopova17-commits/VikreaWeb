@@ -24,7 +24,7 @@ export default function About() {
           <div className="lg:w-80 flex-shrink-0">
             <div className="aspect-[3/4] rounded-2xl overflow-hidden">
               <img 
-                src="/attached_assets/change-the-background-to-this_1763324068749.jpg"
+                src="/images/about-portrait.jpg"
                 alt="Lucia Prekopová - Expert v systematizácii firiem"
                 className="w-full h-full object-cover"
                 data-testid="img-about"

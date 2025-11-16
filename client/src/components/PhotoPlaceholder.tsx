@@ -9,7 +9,7 @@ export default function PhotoPlaceholder() {
         <div className="max-w-2xl mx-auto">
           <div className="aspect-[3/4] rounded-2xl overflow-hidden">
             <img 
-              src="/attached_assets/Generated Image November 16, 2025 - 5_42PM_1763324068742.png"
+              src="/images/photo-placeholder.png"
               alt="Professional business environment"
               className="w-full h-full object-cover"
               data-testid="img-placeholder"

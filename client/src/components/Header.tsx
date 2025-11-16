@@ -5,7 +5,7 @@ export default function Header() {
         <div className="flex items-center justify-between h-16 lg:h-20">
           <div className="flex items-center">
             <img 
-              src="/attached_assets/image_1763324156468.png"
+              src="/images/logo.png"
               alt="ViKrea Logo"
               className="h-10 lg:h-12 w-auto"
               data-testid="img-logo"
