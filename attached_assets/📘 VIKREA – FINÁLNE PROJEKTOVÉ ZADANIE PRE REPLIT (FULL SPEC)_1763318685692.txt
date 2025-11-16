@@ -1,0 +1,534 @@
+﻿📘 VIKREA – FINÁLNE PROJEKTOVÉ ZADANIE PRE REPLIT (FULL SPEC)
+Verzia: 1.0
+ Účel: Rýchle a čisté nasadenie webu v Replite (React/Tailwind) podľa finálnych podkladov, brandu a wireframov.
+________________
+
+
+1) Project Summary (Popis projektu)
+VyCrea je kreatívna business agentúra zameraná na rast SME firiem (50–100 zamestnancov). Web má plniť dve funkcie:
+1. Prezentácia služby – jasne komunikovať, kto si, pre koho robíš, aké máš výsledky (+40 % zisk, +60 % obrat) a čo presne dodávaš.
+
+2. Lead generation – hlavné CTA je spustenie mini-auditu / prioritizačnej matice (3–5 otázok), ktorá po zadaní emailu vygeneruje odporúčania.
+
+Rozsah projektu:
+– 1 responzívny onepager
+– 1 interaktívny wizard (mini audit)
+– následný email s výsledkami (statický templát s dynamickou sekciou)
+Primárna konverzia: vyplnenie mini-auditu + email
+ Sekundárna konverzia: naplánovanie callu
+Jadro hodnoty: Web ukazuje tvoju hlavnú diferenciáciu: nie teória, ale implementácia, kontrola a reálne výsledky.
+________________
+
+
+2) Outline (Struktúra sekcií)
+1. Hero
+ Účel: vysvetliť problém → tvoje riešenie → výsledky → 2× CTA.
+2. Poznáte tieto situácie?
+ Účel: zrkadliť typické bloky cieľovej skupiny (50–100 ľudí).
+3. Ako to funguje
+ Účel: prehľad 4 krokov: Diagnostika → Návrh → Implementácia → Kontrola.
+4. Výsledky
+ Účel: komunikovať tvrdé dáta + mini claim.
+5. Prioritizačná matica (lead magnet)
+ Účel: presmerovať do kalkulačky.
+6. Služby (3-tier)
+ Účel: jasne odlíšiť tri úrovne spolupráce.
+7. O mne
+ Účel: credential proof – 25 rokov, ISO, skúsenosti.
+8. Finálne CTA
+ Účel: call booking alebo mini-audit.
+9. Footer
+ Účel: linky + kontakt.
+10. Mini Audit (wizard)
+ Účel: zber dát → výsledkový email → možnosť callu.
+________________
+
+
+3) Texty (SLK – finálna verzia)
+Použi presne texty z finálneho dokumentu:
+
+(Developer dostane: H1, subheadline, CTA, body listy, lead copy, výsledky, služby, O mne, CTA, microcopy. Bez zmien.)
+________________
+
+
+4) Wireframe Specification (Desktop + Mobil)
+Grid:
+ – desktop 12 col / 1200 px max width
+– mobile 4 col
+Breakpoints:
+ – sm: 640
+– md: 768
+– lg: 1024
+– xl: 1280
+Sekcie – layout pokyn:
+ Hero: center, veľké čísla, 2 CTAs, whitespace.
+Sekcie 1–3: cards s border #E9ECEF, modré nadpisy.
+Výsledky: čísla veľké, oranžová #FF6B35.
+Služby: 3 karty s farebným border top (mätová, modrá, oranžová).
+O mne: 2-column layout (foto neskôr doplníš).
+Finálne CTA: modré pozadie #1E40AF + biely text.
+Footer: dark gray pozadie #212529.
+Mini-audit wizard (high-fidelity mockup):
+
+– 6 krokov
+– progress bar mätový
+– single/multi-select cards
+– email + GDPR
+– thank you screen s 2 CTA.
+________________
+
+
+5) Visual Guideline (Farby, fonty, štýl)
+Z Brand Style Guide:
+
+Farby:
+ – Modrá #1E40AF (primárna)
+– Oranžová #FF6B35 (CTA)
+– Mätová #06D6A0 (akcent)
+– Light gray #E9ECEF
+– Dark gray #495057
+– White #FFFFFF
+Typography: Inter (400, 500, 600, 700, 800)
+Tone: razantný, priamy, bez korporátnych buzzwordov.
+Ikony: Lucide, line 2–3 px stroke.
+Micro-interactions: hover opacity, subtle scale 1.02 na CTA, smooth transitions 150–200 ms.
+________________
+
+
+6) Assets List
+Logo:
+ – SVG + PNG (modrá verzia, biela verzia)
+– min šírka 120 px
+Obrázky:
+ – foto Lucia (doplniť) – 1600×1000 / JPG
+– case study visuals – 1200×800 / PNG
+– ikony Lucide (React) – inline
+Mini Audit:
+ – žiadne obrázky, len ikonografia (Lucide).
+Email template:
+ – jednoduchý HTML bez obrázkov.
+________________
+
+
+7) Tech Spec (Replit build)
+Stack:
+ – React + Vite alebo Next.js Standalone (preferované Vite pre Replit)
+– TailwindCSS
+– Lucide React icons
+Kalkulačka:
+ – Wizard v Reacte (useState)
+– Form validation (email required)
+– GDPR checkbox required
+– API:
+– email sending (Brevo/Mailersend/Resend – navrhni podľa Replitu)
+– voliteľne: autocomplete z Obchodného Registra (SK API – voliteľné v beta)
+SEO:
+ – title, meta description
+– OG tags
+– hn tagy podľa textov
+Performance:
+ – LCP < 2.5s
+– lazyload ikon a sekundárnych sekcií
+– optimalizované obrázky (WebP)
+Accessibility (WCAG AA):
+ – kontrast modrá/biela OK
+– tlačidlá min. 44×44 px
+– labely pre všetky inputy
+– focus states v modrej/mätovej
+________________
+
+
+8) Implementačný plán
+Fáza 1 – Setup (0,5 dňa)
+ – Replit projekt
+– Tailwind config
+– Global layout
+Fáza 2 – Onepager (1–2 dni)
+ – Hero
+– Situácie
+– Ako to funguje
+– Výsledky
+– Služby
+– O mne
+– CTA
+– Footer
+Fáza 3 – Mini Audit Wizard (1 deň)
+ – 6 krokov
+– UI + flow
+– email sending endpoint
+Fáza 4 – Testing (0,5 dňa)
+ – mobile
+– SEO
+– accessibility
+– performance
+Fáza 5 – Launch (0,5 dňa)
+ – DNS
+– deploy
+– analytics (Plausible)
+________________
+
+
+9) QA & Launch Checklist
+Technické:
+ – všetky sekcie viditeľné
+– všetky CTAs funkčné
+– wizard → email → správny obsah
+– error states emailu
+Obsahové:
+ – texty v slovenčine
+– fotky správne orezané
+– správne čísla výsledkov
+GDPR:
+ – checkbox pri emaili
+– privacy page (jednoduchá)
+– cookieless analytics (Plausible)
+Výkon:
+ – LCP < 2.5s
+– obrázky <200 kb
+– minifikácia
+________________
+
+
+10) Handover Pack (pre vývojára)
+Štruktúra priečinkov:
+/src  
+  /components  
+  /sections  
+  /audit  
+  /assets  
+  /styles  
+/email-templates
+
+
+Názvy súborov:
+ – Hero.jsx
+– Services.jsx
+– Results.jsx
+– AuditWizard.jsx
+– email/priorities-template.html
+Sample JSON pre audit výsledok:
+{
+  "company_size": "50-100",
+  "goals": ["optimalizacia procesov", "zvysenie zisku"],
+  "priority": "Procesy a kontrola",
+  "email": "client@firma.sk"
+}
+
+
+1) Integrácie & API (finálne rozhodnutia)
+✔ Použiť API Obchodného Registra (SR)
+– Mini audit bude používať SK register (ORSR API)
+– Použitie: autocomplete názvu → ID → načítanie základných údajov (IČO, adresa, právna forma)
+Technický postup:
+   * Frontend: input firma → debounce → GET request
+
+   * Backend (Replit serverless): fetch ORSR endpoint, normalizácia dát → návrat FE
+
+   * Uloženie: iba názov firmy, nie celé dáta (GDPR)
+
+________________
+
+
+✔ Email provider: zatiaľ žiadny
+→ Backend bude mať placeholder sendEmail() funkciu, ktorú neskôr napojíme (Sendgrid/Mailersend).
+UI ostáva rovnaké – email sa odošle, zvyšok sa loguje do Google Sheets.
+________________
+
+
+✔ Logo máš
+– počítam s SVG umiestneným v /public/logo.svg.
+________________
+
+
+✔ Fotky dodáš neskôr
+→ vytvorím prázdne „slots“ v komponentoch (Hero, O mne, Case Study), aby sa dali rýchlo doplniť.
+________________
+
+
+✔ Doména: vikrea.sk
+→ pripravím final deploy s touto doménou (A record → Replit)
+________________
+
+
+✔ Blog: Zatiaľ NIE
+Z konkrétnych dôvodov:
+      1. odbremenenie vývojára
+
+      2. pre pilotnú verziu nepotrebuješ CMS
+
+      3. štruktúra sa nebude zbytočne komplikovať
+
+________________
+
+
+✔ Audit → uloženie do Google Sheets
+Technické riešenie:
+Replit Serverless Route → Google Sheets API
+         * použijeme Google Service Account
+
+         * jedna tabuľka audit_submissions
+
+         * ukladať budeme:
+
+            * timestamp
+
+            * email
+
+            * firma (ak vyplní / API ORSR)
+
+            * odpovede (JSON string)
+
+            * priorita generovaná logikou (napr. “Procesy”, “Komunikácia”, “Rast”)
+
+Email klientovi zatiaľ nebude odchádzať → iba “success screen”.
+(Template na email už v projekte bude, len bez reálneho odosielania.)
+________________
+
+
+✔ Calendly: Zatiaľ NIE
+CTA tlačidlá budú:
+               * “Poďme si zavolať” → mailto
+
+               * “Odhaľte kritické priority” → mini audit
+
+               * “Naplánuj si call” → mailto
+
+________________
+
+
+✔ Obsah spravuje zakladateľ (ty)
+→ finálny stack: žiadny headless CMS, statické texty v Reacte.
+→ obsah bude vo forme JS/JSON súborov (ľahko sa edituje).
+→ neskôr ti môžem prekopnúť do CMS (Sanity), ak budeš chcieť.
+________________
+
+
+2) Upravená Tech Spec (v1.1)
+Frontend
+                  * React + Vite (najstabilnejšia varianta na Replit)
+
+                  * TailwindCSS
+
+                  * Lucide React icons
+
+Backend (Replit serverless)
+                     * /api/register-search → volanie ORSR
+
+                     * /api/audit-submit → uloženie do Google Sheets
+
+                     * /api/send-email → placeholder
+
+Mini Audit (6 krokov)
+                        * presná štruktúra podľa high-fidelity mockupu
+
+
+                        * primárna farba: modrá
+
+                        * CTA: oranžová
+
+                        * progress mätová
+
+Email Template (HTML)
+                           * uložené v /email-templates/priorities.html
+
+                           * statická šablóna so {{placeholder}} hodnotami
+
+                           * zatiaľ bez odosielania
+1) Audit – FINÁLNY rozsah (Z mockupu)
+KROK 1/6 – ZÁKLAD FIRMY
+Otázka 1: Koľko ľudí máte vo firme?
+Možnosti: 1–20, 20–50, 50–100, 100+
+________________
+
+
+KROK 2/6 – PROCESY & SYSTÉM
+Otázka 2: Ako sú nastavené vaše procesy?
+Možnosti: Nemáme / Sú, ale ignorované / Nekonzistentné / Funkčný systém
+Otázka 3: Ako funguje prepojenie oddelení?
+Možnosti: Každý robí svoje / Chaoticky / Máme pravidlá, ale slabé dodržiavanie / Funguje dobre
+________________
+
+
+KROK 3/6 – OBCHOD, MARKETING, PRODUKT
+Otázka 4 (multi-select): Kde unikajú príležitosti?
+Checkboxy: Slabý obchodný proces / Slabé CRM / Marketing mimo reality / Málo viditeľný produkt / Nestíhame realizáciu
+Otázka 5: Ako pracujete s klientmi?
+Možnosti: Náhodne / Chaoticky / Bez kontroly / Jasný sales proces
+________________
+
+
+KROK 4/6 – ĽUDIA & VÝKON
+Otázka 6: Ako delegujete?
+Možnosti: Majiteľ robí všetko / Delegujeme bez termínu / Nekonzistentný výkon / Jasné role
+Otázka 7: Ako rýchlo reagujú oddelenia?
+Možnosti: Pomalý / Bez štandardov / Dobré, nie vždy / Jasné SLA
+________________
+
+
+KROK 5/6 – CIELE
+Otázka 8 (multi-select): Čo chcete dosiahnuť v najbližších 6 mesiacoch?
+Checkboxy: Zvýšiť zisk, Zlepšiť procesy, Zaviesť kontrolu, Posilniť obchod, Posilniť marketing, Zaviesť AI, Zlepšiť výkon ľudí, Najať ľudí
+________________
+
+
+KROK 6/6 – EMAIL + GDPR
+Otázka 9: Kam vám máme poslať prioritnú mapu?
+Email input + GDPR checkbox (povinné).
+CTA: Získať výsledky
+________________
+
+
+Thank-you screen
+→ presne podľa mockupu (mätový check + 2 CTA)
+– Poďme si zavolať
+– Napísať email
+________________
+
+
+2) Logika auditu (ako bude fungovať)
+➡️ Tieto odpovede sa ukladajú do Google Sheets (1 riadok = 1 odoslanie).
+➡️ Po send → zobrazí sa len THANK-YOU obrazovka (email zatiaľ len ako koncept).
+Generovanie priority (interná logika)
+Pridám jednoduché hodnotenie:
+                              * Process scoring
+
+                              * Communication scoring
+
+                              * Sales/Marketing scoring
+
+                              * People scoring
+
+                              * Goals scoring
+
+→ Výstup: 1 hlavná priorita (napr. “Procesy”, “Delegovanie”, “Prepojenie oddelení”).
+________________
+
+
+3) Integrácie (definitívne)
+✔ ORSR API
+Použije sa autocomplete + základné údaje.
+Volanie bude na backend route /api/company-search.
+✔ Google Sheets (uloženie auditu)
+– Service account
+– Tabuľka audit_submissions
+– Stĺpce: timestamp, email, firma, ico (ak dostupné), json_answers, hlavná_priorita
+❌ Email sending zatiaľ nie
+→ nechávam v projekte ako prázdny endpoint.
+❌ Calendly zatiaľ nie
+→ “Poďme si zavolať” = mailto link.
+________________
+
+
+4) UI / UX – záväzne podľa mockupu
+Použiť všetko, čo je v high-fidelity:
+– farby
+– spacingy
+– UI states
+– štýl tlačidiel
+– progress bar
+– ikonografia (Lucide)
+
+________________
+
+
+5) Replit – záväzná štruktúra projektu
+/src
+  /components
+    Header.jsx
+    Footer.jsx
+    Button.jsx
+  /audit
+    AuditWizard.jsx
+    steps/
+      Step1.jsx
+      Step2.jsx
+      Step3.jsx
+      Step4.jsx
+      Step5.jsx
+      Step6.jsx
+  /sections
+    Hero.jsx
+    Situations.jsx
+    HowItWorks.jsx
+    Results.jsx
+    Matrix.jsx
+    Services.jsx
+    About.jsx
+    FinalCTA.jsx
+  /api
+    company-search.js
+    audit-submit.js
+    send-email.js  // empty for now
+/assets
+  logo.svg
+  (image placeholders)
+/content
+  homepage.json
+  audit-config.json
+/email-templates
+  priorities.html
+
+
+________________
+
+
+6) Čo ešte doplním automaticky (bez ďalšieho pýtania)
+✔ All CTA buttons → slovenské
+– Poďme si zavolať
+– Odhaľte kritické priority
+– Získať výsledky
+– Napísať email
+✔ Kompletný audit-config.json
+(aby sa to dalo meniť bez zásahu do kódu)
+✔ Všetky texty = konečná verzia
+✔ Brand styling = záväzne
+
+
+Audit Wizard → bude v rámci homepage, ale technicky oddelený
+                                 * komponent: /audit/AuditWizard.jsx
+
+                                 * importovaný lazy: const AuditWizard = React.lazy(() => import(...))
+
+Otvorenie auditu cez CTA:
+                                    * CTA buttony spúšťajú setShowAudit(true)
+
+                                    * AuditWizard otvorí fullscreen modal
+
+URL zostáva stále len /
+→ žiadne /audit
+→ wizard nemá vlastnú URL, ale môžeme doplniť anchor pre scroll
+(voliteľné: / + #audit → otvorí rovno modal)
+Sticky CTA v mobilnej verzii
+– dolná sticky lišta “Odhaľte priority →”
+ – po kliknutí otvorí wizard
+Toto vie dramaticky zvýšiť konverziu na mobiloch.
+________________
+
+
+💡 Dôležitá UX poznámka
+Keďže audit je “hlavný konverzný nástroj”, integrácia do homepage má jeden veľký benefit:
+➡️ Každé CTA na stránke bude smerovať do toho istého modalu.
+Bez presmerovania, bez reloadu, bez ďalšej stránky.
+________________
+
+
+🔧 Technické doplnenia do špecifikácie (FINAL v2.1)
+1) AuditWizard Modal
+<Modal open={showAudit}>
+   <AuditWizard onClose={() => setShowAudit(false)} />
+</Modal>
+
+
+2) Lazy loading:
+const AuditWizard = React.lazy(() => import('./audit/AuditWizard'));
+
+
+3) Suspense fallback:
+“Načítavam audit…”
+4) Analytics event (pripravený, zatiaľ lokalný)
+– audit_opened
+– audit_completed
+– audit_email_submitted
+5) URL Anchor support
+CTA môže mať URL: /#audit
+→ JS odchytí anchor → automaticky otvorí wizard.
