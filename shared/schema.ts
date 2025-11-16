@@ -16,3 +16,13 @@ export const insertUserSchema = createInsertSchema(users).pick({
 
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users.$inferSelect;
+
+// Slovak Business Register Company
+export const companySchema = z.object({
+  ico: z.string(),
+  name: z.string(),
+  legalForm: z.string().optional(),
+  city: z.string().optional(),
+});
+
+export type Company = z.infer<typeof companySchema>;
