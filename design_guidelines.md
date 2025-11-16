@@ -1,4 +1,4 @@
-# VyCrea Design Guidelines
+# ViKrea Design Guidelines
 
 ## Design Approach
 **Reference-Based Approach**: Modern SaaS aesthetic inspired by Linear's typography + Stripe's restraint + bold data-driven visuals. Industrial elegance with sharp edges, strong gradients, and systematic grid patterns.

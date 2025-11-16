@@ -43,14 +43,14 @@ export default function Situations() {
             return (
               <Card 
                 key={index} 
-                className="border-card-border hover-elevate transition-all duration-200"
+                className="border-card-border hover:shadow-lg hover:border-primary/20 transition-all duration-200 group"
                 data-testid={`card-situation-${index}`}
               >
                 <CardContent className="p-8">
                   <div className="flex gap-4">
                     <div className="flex-shrink-0">
-                      <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
-                        <Icon className="w-6 h-6 text-primary" strokeWidth={2} />
+                      <div className="w-14 h-14 rounded-lg bg-gradient-to-br from-primary/15 to-primary/5 flex items-center justify-center group-hover:from-primary/20 group-hover:to-primary/10 transition-all duration-200">
+                        <Icon className="w-7 h-7 text-primary" strokeWidth={2.5} />
                       </div>
                     </div>
                     <div>

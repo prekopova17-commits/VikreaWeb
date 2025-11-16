@@ -13,7 +13,7 @@ export default function Header({ onAuditClick }: HeaderProps) {
             <div className="w-10 h-10 lg:w-12 lg:h-12 rounded-full bg-primary flex items-center justify-center text-primary-foreground font-bold text-lg">
               VK
             </div>
-            <span className="font-bold text-lg lg:text-xl text-foreground">VyCrea</span>
+            <span className="font-bold text-lg lg:text-xl text-foreground">ViKrea</span>
           </div>
           
           <Button 

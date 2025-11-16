@@ -1,7 +1,8 @@
 export default function Results() {
   return (
-    <section className="py-20 lg:py-32 bg-accent/30">
-      <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
+    <section className="py-20 lg:py-32 bg-accent/30 relative overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent pointer-events-none" />
+      <div className="container mx-auto px-4 lg:px-8 max-w-7xl relative z-10">
         <div className="text-center mb-16">
           <h2 className="text-3xl lg:text-5xl font-bold text-primary mb-4">
             Výsledky

@@ -66,7 +66,7 @@ export default function Services({ onAuditClick }: ServicesProps) {
           {services.map((service, index) => (
             <Card 
               key={index}
-              className={`border-card-border border-t-4 ${service.borderColor} hover-elevate transition-all duration-200 ${service.popular ? 'shadow-lg' : ''}`}
+              className={`border-card-border border-t-4 ${service.borderColor} hover:shadow-xl hover:scale-105 transition-all duration-200 ${service.popular ? 'shadow-lg scale-105' : ''} group`}
               data-testid={`card-service-${index}`}
             >
               {service.popular && (

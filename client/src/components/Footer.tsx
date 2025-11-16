@@ -8,7 +8,7 @@ export default function Footer() {
               <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-primary-foreground font-bold text-lg">
                 VK
               </div>
-              <span className="font-bold text-xl">VyCrea</span>
+              <span className="font-bold text-xl">ViKrea</span>
             </div>
             <p className="text-white/70 text-sm leading-relaxed">
               Kreatívna business agentúra zameraná na systematický rast SME firiem.
@@ -50,7 +50,7 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-white/10 mt-12 pt-8 text-center text-sm text-white/50">
-          <p>&copy; {new Date().getFullYear()} VyCrea. Všetky práva vyhradené.</p>
+          <p>&copy; {new Date().getFullYear()} ViKrea. Všetky práva vyhradené.</p>
         </div>
       </div>
     </footer>

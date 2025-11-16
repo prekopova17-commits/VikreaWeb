@@ -6,8 +6,11 @@ interface FinalCTAProps {
 
 export default function FinalCTA({ onAuditClick }: FinalCTAProps) {
   return (
-    <section className="py-24 lg:py-32 bg-primary text-primary-foreground">
-      <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
+    <section className="py-24 lg:py-32 bg-gradient-to-br from-primary via-primary to-primary/90 text-primary-foreground relative overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent pointer-events-none" />
+      <div className="absolute top-0 left-0 w-1/3 h-1/3 bg-gradient-to-br from-[hsl(var(--mint-accent))]/10 to-transparent blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 right-0 w-1/3 h-1/3 bg-gradient-to-tl from-[hsl(var(--orange-cta))]/10 to-transparent blur-3xl pointer-events-none" />
+      <div className="container mx-auto px-4 lg:px-8 max-w-7xl relative z-10">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl lg:text-5xl font-extrabold mb-6">
             Pripravení na zmenu?

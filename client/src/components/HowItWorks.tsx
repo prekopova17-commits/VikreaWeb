@@ -47,18 +47,21 @@ export default function HowItWorks() {
             return (
               <Card 
                 key={index} 
-                className="border-card-border hover-elevate transition-all duration-200 relative overflow-visible"
+                className="border-card-border hover:shadow-lg hover:border-primary/20 transition-all duration-200 relative overflow-visible group"
                 data-testid={`card-step-${index}`}
               >
-                <CardContent className="p-8 pt-16">
-                  <div className="absolute -top-6 left-8">
-                    <div className="w-14 h-14 rounded-lg bg-primary flex items-center justify-center shadow-lg">
-                      <Icon className="w-7 h-7 text-primary-foreground" strokeWidth={2} />
+                <CardContent className="p-8 pt-16 relative">
+                  <div className="absolute inset-0 bg-gradient-to-br from-transparent to-primary/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+                  <div className="absolute -top-6 left-8 z-10">
+                    <div className="w-14 h-14 rounded-lg bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center shadow-lg group-hover:shadow-xl group-hover:scale-110 transition-all duration-200">
+                      <Icon className="w-7 h-7 text-primary-foreground" strokeWidth={2.5} />
                     </div>
                   </div>
-                  <div className="text-sm font-bold text-[hsl(var(--mint-accent))] mb-3">{step.number}</div>
-                  <h3 className="text-xl font-bold text-foreground mb-3">{step.title}</h3>
-                  <p className="text-muted-foreground leading-relaxed text-sm">{step.description}</p>
+                  <div className="relative z-10">
+                    <div className="text-sm font-bold text-[hsl(var(--mint-accent))] mb-3">{step.number}</div>
+                    <h3 className="text-xl font-bold text-foreground mb-3">{step.title}</h3>
+                    <p className="text-muted-foreground leading-relaxed text-sm">{step.description}</p>
+                  </div>
                 </CardContent>
               </Card>
             );

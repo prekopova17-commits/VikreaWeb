@@ -7,8 +7,10 @@ interface HeroProps {
 
 export default function Hero({ onAuditClick }: HeroProps) {
   return (
-    <section className="pt-32 lg:pt-40 pb-20 lg:pb-32 bg-background">
-      <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
+    <section className="pt-32 lg:pt-40 pb-20 lg:pb-32 bg-background relative overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-[hsl(var(--mint-accent))]/5 pointer-events-none" />
+      <div className="absolute top-0 right-0 w-1/2 h-1/2 bg-gradient-to-bl from-primary/10 to-transparent blur-3xl pointer-events-none" />
+      <div className="container mx-auto px-4 lg:px-8 max-w-7xl relative z-10">
         <div className="max-w-5xl mx-auto text-center">
           <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold leading-tight mb-6 text-foreground">
             Stagnujúca firma?<br />
@@ -16,7 +18,7 @@ export default function Hero({ onAuditClick }: HeroProps) {
           </h1>
           
           <p className="text-lg lg:text-xl text-muted-foreground max-w-3xl mx-auto mb-12 leading-relaxed">
-            VyCrea transformuje stagnujúce a chaoticky rastúce SME firmy (50-100 ľudí) na systematické, ziskové organizácie. 
+            ViKrea transformuje stagnujúce a chaoticky rastúce SME firmy (50-100 ľudí) na systematické, ziskové organizácie. 
             Nie len poradenstvom, ale <strong className="text-foreground">priamou implementáciou, kontrolou a dokopávaním</strong> majiteľov k výsledkom.
           </p>
 
