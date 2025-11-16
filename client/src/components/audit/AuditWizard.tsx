@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { VisuallyHidden } from "@/components/ui/visually-hidden";
 import { Progress } from "@/components/ui/progress";
 import Step1 from "./steps/Step1";
 import Step2 from "./steps/Step2";
@@ -85,9 +86,29 @@ export default function AuditWizard({ open, onClose }: AuditWizardProps) {
 
   const progressPercentage = (currentStep / totalSteps) * 100;
 
+  const stepTitles = [
+    "Veľkosť firmy",
+    "Procesy & Systém", 
+    "Obchod, Marketing, Produkt",
+    "Ľudia & Výkon",
+    "Vaše ciele",
+    "Kontaktné údaje"
+  ];
+
   return (
     <Dialog open={open} onOpenChange={handleClose}>
       <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto p-0">
+        <VisuallyHidden>
+          <DialogTitle>
+            {currentStep <= totalSteps ? stepTitles[currentStep - 1] : "Ďakujeme"}
+          </DialogTitle>
+          <DialogDescription>
+            {currentStep <= totalSteps 
+              ? `Krok ${currentStep} z ${totalSteps} - ${stepTitles[currentStep - 1]}`
+              : "Váš audit bol úspešne odoslaný"}
+          </DialogDescription>
+        </VisuallyHidden>
+        
         {currentStep <= totalSteps && (
           <div className="sticky top-0 bg-background z-10">
             <div className="flex items-center justify-between px-6 pt-6 pb-4">
