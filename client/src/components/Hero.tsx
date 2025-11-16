@@ -13,13 +13,11 @@ export default function Hero({ onAuditClick }: HeroProps) {
       <div className="container mx-auto px-4 lg:px-8 max-w-7xl relative z-10">
         <div className="max-w-5xl mx-auto text-center">
           <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold leading-tight mb-6 text-foreground">
-            Stagnujúca firma?<br />
-            <span className="text-primary">Zmeníme to.</span>
+            Ak nevidíte, čo brzdí váš rast, nikdy to neopravíte. <span className="text-primary">Ja to nájdem a vyriešim podstatu problému.</span>
           </h1>
           
           <p className="text-lg lg:text-xl text-muted-foreground max-w-3xl mx-auto mb-12 leading-relaxed">
-            ViKrea transformuje stagnujúce a chaoticky rastúce SME firmy (50-100 ľudí) na systematické, ziskové organizácie. 
-            Nie len poradenstvom, ale <strong className="text-foreground">priamou implementáciou, kontrolou a dokopávaním</strong> majiteľov k výsledkom.
+            Zatiaľ neviete, čo presne treba. Ja to zistím a nastavím procesy tak, aby vaša firma konečne fungovala systémovo — krok po kroku, s kontrolou a jasným poriadkom.
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12 max-w-4xl mx-auto">
@@ -56,21 +54,21 @@ export default function Hero({ onAuditClick }: HeroProps) {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Button 
-              onClick={onAuditClick}
               size="lg"
               className="bg-[hsl(var(--orange-cta))] hover:bg-[hsl(var(--orange-cta))]/90 text-white font-semibold px-8 py-6 text-lg transition-all duration-200 hover:scale-105"
-              data-testid="button-hero-audit"
-            >
-              Odhaľte kritické priority
-            </Button>
-            <Button 
-              size="lg"
-              variant="outline"
-              className="border-primary text-primary hover:bg-primary hover:text-primary-foreground font-semibold px-8 py-6 text-lg transition-all duration-200"
               asChild
               data-testid="button-hero-contact"
             >
               <a href="mailto:lucia@vycrea.sk">Poďme si zavolať</a>
+            </Button>
+            <Button 
+              onClick={onAuditClick}
+              size="lg"
+              variant="outline"
+              className="border-primary text-primary hover:bg-primary hover:text-primary-foreground font-semibold px-8 py-6 text-lg transition-all duration-200"
+              data-testid="button-hero-audit"
+            >
+              Odhaľte kritické priority
             </Button>
           </div>
 
