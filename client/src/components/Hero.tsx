@@ -21,7 +21,7 @@ export default function Hero({ onAuditClick }: HeroProps) {
           </h1>
           
           <p className="text-lg lg:text-xl text-muted-foreground max-w-3xl mx-auto mb-12 leading-relaxed">
-            Zatiaľ neviete, čo presne treba. Ja to zistím a nastavím procesy tak, aby vaša firma konečne fungovala systémovo — krok po kroku, s kontrolou a jasným poriadkom.
+            Zatiaľ neviete, čo presne je treba. Ja to zistím a nastavím procesy tak, aby vaša firma konečne fungovala systémovo — krok po kroku, s kontrolou a jasným poriadkom.
           </p>
 
           <div className="mb-12 max-w-4xl mx-auto">
