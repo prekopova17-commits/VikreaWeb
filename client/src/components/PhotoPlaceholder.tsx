@@ -7,12 +7,13 @@ export default function PhotoPlaceholder() {
       
       <div className="container mx-auto px-4 lg:px-8 max-w-7xl relative z-10">
         <div className="max-w-2xl mx-auto">
-          <div className="aspect-[3/4] bg-muted rounded-2xl flex items-center justify-center border-2 border-dashed border-border relative overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-[hsl(var(--orange-cta))]/5" />
-            <div className="text-center text-muted-foreground relative z-10">
-              <div className="text-lg font-semibold mb-2">Photo Placeholder</div>
-              <div className="text-sm">Portrait Image (3:4)</div>
-            </div>
+          <div className="aspect-[3/4] rounded-2xl overflow-hidden">
+            <img 
+              src="/attached_assets/Generated Image November 16, 2025 - 5_42PM_1763324068742.png"
+              alt="Professional business environment"
+              className="w-full h-full object-cover"
+              data-testid="img-placeholder"
+            />
           </div>
         </div>
       </div>

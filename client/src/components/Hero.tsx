@@ -20,11 +20,13 @@ export default function Hero({ onAuditClick }: HeroProps) {
           </p>
 
           <div className="mb-12 max-w-4xl mx-auto">
-            <div className="aspect-[16/9] bg-muted rounded-2xl flex items-center justify-center border-2 border-dashed border-border">
-              <div className="text-center text-muted-foreground">
-                <div className="text-lg font-semibold mb-2">Photo Placeholder</div>
-                <div className="text-sm">16:9 Hero Image</div>
-              </div>
+            <div className="aspect-[16/9] rounded-2xl overflow-hidden">
+              <img 
+                src="/attached_assets/Generated Image November 16, 2025 - 5_23PM_1763324068747.png"
+                alt="Lucia Prekopová - Business Consultant"
+                className="w-full h-full object-cover"
+                data-testid="img-hero"
+              />
             </div>
           </div>
 

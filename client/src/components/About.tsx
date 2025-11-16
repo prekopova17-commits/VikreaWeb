@@ -22,12 +22,13 @@ export default function About() {
 
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 mb-16">
           <div className="lg:w-80 flex-shrink-0">
-            <div className="aspect-[3/4] bg-muted rounded-2xl flex items-center justify-center border-2 border-dashed border-border relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-[hsl(var(--orange-cta))]/5" />
-              <div className="text-center text-muted-foreground relative z-10">
-                <div className="text-lg font-semibold mb-2">Photo Placeholder</div>
-                <div className="text-sm">Portrait Image (3:4)</div>
-              </div>
+            <div className="aspect-[3/4] rounded-2xl overflow-hidden">
+              <img 
+                src="/attached_assets/change-the-background-to-this_1763324068749.jpg"
+                alt="Lucia Prekopová - Expert v systematizácii firiem"
+                className="w-full h-full object-cover"
+                data-testid="img-about"
+              />
             </div>
           </div>
 
