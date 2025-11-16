@@ -70,7 +70,7 @@ export default function Services({ onAuditClick }: ServicesProps) {
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
           {services.map((service, index) => (
             <Card 
               key={index}
@@ -83,14 +83,14 @@ export default function Services({ onAuditClick }: ServicesProps) {
                 </div>
               )}
               <CardHeader className="pb-4">
-                <div className="text-4xl mb-3">{service.medal}</div>
-                <h3 className="text-xl lg:text-2xl font-bold text-foreground mb-1">{service.name}</h3>
+                <h3 className="text-xl lg:text-2xl font-bold text-foreground mb-2">{service.name}</h3>
                 {service.subtitle && (
-                  <p className="text-sm text-muted-foreground italic">({service.subtitle})</p>
+                  <p className="text-sm text-muted-foreground italic mb-3">({service.subtitle})</p>
                 )}
-                <div className="mt-4 space-y-1">
-                  <div className="text-2xl lg:text-3xl font-extrabold text-primary">{service.price}</div>
-                  <div className="text-sm text-muted-foreground font-semibold">{service.duration}</div>
+                <div className="flex items-baseline gap-3 mt-3">
+                  <div className="text-lg font-bold text-primary">{service.price}</div>
+                  <span className="text-muted-foreground">•</span>
+                  <div className="text-sm text-muted-foreground">{service.duration}</div>
                 </div>
               </CardHeader>
               <CardContent className="space-y-6">
@@ -109,17 +109,20 @@ export default function Services({ onAuditClick }: ServicesProps) {
                   <p className="text-sm font-semibold text-foreground mb-2">Pre koho:</p>
                   <p className="text-sm text-muted-foreground italic">{service.forWho}</p>
                 </div>
-                <Button 
-                  className="w-full bg-[hsl(var(--orange-cta))] hover:bg-[hsl(var(--orange-cta))]/90 text-white font-semibold"
-                  size="lg"
-                  asChild
-                  data-testid={`button-service-${index}`}
-                >
-                  <a href="mailto:lucia@vycrea.sk">Poďme si zavolať</a>
-                </Button>
               </CardContent>
             </Card>
           ))}
+        </div>
+
+        <div className="text-center">
+          <Button 
+            size="lg"
+            className="bg-[hsl(var(--orange-cta))] hover:bg-[hsl(var(--orange-cta))]/90 text-white font-semibold px-8 py-6 text-lg transition-all duration-200 hover:scale-105"
+            asChild
+            data-testid="button-services-contact"
+          >
+            <a href="mailto:lucia@vycrea.sk">Poďme si zavolať</a>
+          </Button>
         </div>
       </div>
     </section>

@@ -1,76 +1,56 @@
-import { Award, Briefcase, TrendingUp } from "lucide-react";
-import PatternBackground from "./PatternBackground";
+const highlights = [
+  "25 rokov skúseností (obchod, marketing, procesy, kvalita)",
+  "ISO 9001/14001",
+  "prepojenie oddelení v praxi, nie na papieri",
+  "schopnosť viesť aj ťažké zmeny",
+  "razantná, ale empatická komunikácia",
+  "výsledky viditeľné v číslach, nie v prezentáciách"
+];
 
 export default function About() {
   return (
-    <section className="py-20 lg:py-32 bg-accent/30 relative overflow-hidden">
-      <PatternBackground />
-      <div className="container mx-auto px-4 lg:px-8 max-w-7xl relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          <div className="order-2 lg:order-1">
-            <div className="aspect-[4/5] bg-gradient-to-br from-primary/10 via-[hsl(var(--mint-accent))]/5 to-primary/5 rounded-xl flex items-center justify-center border-2 border-dashed border-border/50 relative overflow-hidden group">
-              <div className="absolute inset-0 bg-gradient-to-br from-transparent to-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              <div className="text-center p-8 relative z-10">
-                <div className="w-24 h-24 mx-auto mb-4 rounded-full bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center">
-                  <Briefcase className="w-12 h-12 text-primary" strokeWidth={2.5} />
-                </div>
-                <p className="text-muted-foreground font-medium">
-                  Foto Lucia
-                  <br />
-                  <span className="text-sm">(800×1000)</span>
-                </p>
+    <section className="py-20 lg:py-32 bg-background">
+      <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
+        <div className="mb-12">
+          <h2 className="text-3xl lg:text-5xl font-bold text-primary mb-6 text-center lg:text-left">
+            Kto som a prečo ma berú firmy do stredu diania
+          </h2>
+          <p className="text-lg lg:text-xl text-muted-foreground leading-relaxed mb-8">
+            Nie som konzultantka, ktorá odovzdá prezentáciu a nechá vás v tom. Som operačný partner, ktorý nastaví systém, ustráži ho a posunie firmu ďalej.
+          </p>
+        </div>
+
+        <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 mb-16">
+          <div className="lg:w-80 flex-shrink-0">
+            <div className="aspect-[3/4] bg-muted rounded-2xl flex items-center justify-center border-2 border-dashed border-border relative overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-[hsl(var(--orange-cta))]/5" />
+              <div className="text-center text-muted-foreground relative z-10">
+                <div className="text-lg font-semibold mb-2">Photo Placeholder</div>
+                <div className="text-sm">Portrait Image (3:4)</div>
               </div>
             </div>
           </div>
 
-          <div className="order-1 lg:order-2">
-            <h2 className="text-3xl lg:text-5xl font-bold text-primary mb-6">
-              O mne
-            </h2>
-            
-            <div className="space-y-6 text-muted-foreground leading-relaxed">
-              <p className="text-lg">
-                Som <strong className="text-foreground">Lucia</strong>, operačný partner pre rast SME firiem. 
-                Nie som teoretik ani coach – som praktik, ktorý vám pomôže implementovať systémy a dosiahnuť výsledky.
-              </p>
-              
-              <p>
-                Za sebou mám <strong className="text-foreground">25 rokov práce</strong> v manažmente a konzultingu. 
-                Špecializujem sa na firmy s 50-100 zamestnancami, ktoré stagnujú alebo chaoticky rastú.
-              </p>
+          <div className="flex-1">
+            <ul className="space-y-4">
+              {highlights.map((highlight, index) => (
+                <li key={index} className="flex items-start gap-3 text-lg text-muted-foreground">
+                  <span className="text-[hsl(var(--mint-accent))] mt-1.5 text-xl">●</span>
+                  <span>{highlight}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
 
-              <p>
-                Certifikovaná audítorka <strong className="text-foreground">ISO 9001/14001</strong>. 
-                Pracovala som s desiatkam firmám naprieč odvetviami – od výroby po služby.
+        <div className="relative max-w-5xl mx-auto">
+          <div className="rounded-2xl bg-gradient-to-br from-primary via-primary to-primary/90 p-8 lg:p-12 relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-[hsl(var(--mint-accent))]/20 to-transparent rounded-full blur-3xl" />
+            <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-primary-foreground/5 to-transparent rounded-full blur-3xl" />
+            <div className="relative z-10 text-center">
+              <p className="text-2xl lg:text-3xl font-bold text-[hsl(var(--orange-cta))] leading-relaxed">
+                Majiteľ sa môže venovať rastu. Ja ustrážim, aby mala firma systém.
               </p>
-
-              <p className="text-lg font-semibold text-foreground">
-                Moje credo: Nie PowerPointy. Systémy a výsledky.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-3 gap-6 mt-8">
-              <div className="text-center group">
-                <div className="w-16 h-16 mx-auto mb-3 rounded-lg bg-gradient-to-br from-primary/15 to-primary/5 flex items-center justify-center group-hover:from-primary/20 group-hover:to-primary/10 transition-all duration-200">
-                  <Briefcase className="w-8 h-8 text-primary" strokeWidth={2.5} />
-                </div>
-                <div className="text-3xl font-bold text-primary">25</div>
-                <div className="text-sm text-muted-foreground">Rokov</div>
-              </div>
-              <div className="text-center group">
-                <div className="w-16 h-16 mx-auto mb-3 rounded-lg bg-gradient-to-br from-[hsl(var(--mint-accent))]/15 to-[hsl(var(--mint-accent))]/5 flex items-center justify-center group-hover:from-[hsl(var(--mint-accent))]/20 group-hover:to-[hsl(var(--mint-accent))]/10 transition-all duration-200">
-                  <Award className="w-8 h-8 text-[hsl(var(--mint-accent))]" strokeWidth={2.5} />
-                </div>
-                <div className="text-3xl font-bold text-primary">ISO</div>
-                <div className="text-sm text-muted-foreground">Certifikácia</div>
-              </div>
-              <div className="text-center group">
-                <div className="w-16 h-16 mx-auto mb-3 rounded-lg bg-gradient-to-br from-[hsl(var(--orange-cta))]/15 to-[hsl(var(--orange-cta))]/5 flex items-center justify-center group-hover:from-[hsl(var(--orange-cta))]/20 group-hover:to-[hsl(var(--orange-cta))]/10 transition-all duration-200">
-                  <TrendingUp className="w-8 h-8 text-[hsl(var(--orange-cta))]" strokeWidth={2.5} />
-                </div>
-                <div className="text-3xl font-bold text-primary">+40%</div>
-                <div className="text-sm text-muted-foreground">Zisk</div>
-              </div>
             </div>
           </div>
         </div>
