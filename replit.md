@@ -85,6 +85,7 @@ Preferred communication style: Simple, everyday language.
 - **Radix UI**: Comprehensive set of unstyled, accessible component primitives (@radix-ui/react-*)
 - **shadcn/ui**: Component patterns built on Radix UI with Tailwind styling
 - **Lucide React**: Icon library for consistent iconography
+- **react-calendly**: Calendly integration for booking appointments (https://calendly.com/vikrea)
 - **cmdk**: Command palette component (not currently used in UI)
 - **Embla Carousel**: Carousel/slider functionality
 - **Vaul**: Drawer component primitive
@@ -172,18 +173,13 @@ Preferred communication style: Simple, everyday language.
 
 ### Slovak Business Register (ORSR) Integration
 
-**Status**: 🔄 Mock implementation (development only)
+**Status**: ❌ Not implemented - simplified to text input
 
-**Current**: Mock data with 6 sample Slovak companies for development/testing
+**Current**: Simple optional text input field for company name in Prioritization Matrix section
 
-**Future Integration Options**:
-1. **Transparent Data API** (commercial, production-ready) - contact support@transparentdata.pl
-2. **lubosdz/parser-orsr** (open source, rate-limited to 1 req/min)
-3. **eWay-CRM ORSR API** (third-party wrapper)
+**Previous Consideration**: ORSR API integration was considered but removed in favor of simplicity. User can manually enter company name.
 
-**Documentation**: See `ORSR_INTEGRATION.md` for detailed integration guide
-
-**API Endpoint**: `GET /api/companies/search?q={query}` - searches companies by name or IČO
+**Note**: If real ORSR integration is needed in future, see `ORSR_INTEGRATION.md` for detailed integration options (Transparent Data API, lubosdz/parser-orsr, eWay-CRM ORSR API)
 
 ## Recent Changes (November 2025)
 
@@ -193,13 +189,14 @@ Preferred communication style: Simple, everyday language.
 - Step 2: Processes & Systems assessment (Settings icon)
 - Step 3: Sales, Marketing, Product evaluation (TrendingUp icon, multi-select)
 - Step 4: People & Performance (Users icon)
+  - Answer "Jasné SLA" changed to "Máme jasné pravidlá reakčných časov"
 - Step 5: Goals for next 6 months (Target icon, multi-select)
 - Step 6: Email + GDPR consent (Mail icon)
 - Thank you screen with success message and CTA buttons
 
 ### Visual Identity Updates
-- ViKrea banner: Gradient from #1E40AF (primary blue) to #06D6A0 (mint), with portrait photo
-- Prioritization Matrix section: Turquoise (#06D6A0) background
+- ViKrea banner: Solid primary blue (#1E40AF) background using Inter font
+- Prioritization Matrix section: Turquoise (#06D6A0) background with simple company name input field (no ORSR integration)
 - CTA buttons: White background with orange (#FF6B35) border on turquoise sections
 - Consistent use of orange (#FF6B35) for primary CTAs throughout wizard
 - Lucide icons (32px, mint color) for each wizard step
@@ -207,10 +204,15 @@ Preferred communication style: Simple, everyday language.
 ### Data Flow
 - User completes 6-step audit → Frontend validates with Zod schemas → POST to `/api/audit/submit` → Backend validates → Saves to Google Sheets → (TODO: Sends email with results) → Shows thank you screen
 
+### Calendly Integration
+- "Poďme si zavolať" button opens Calendly popup modal (https://calendly.com/vikrea)
+- Uses react-calendly package for seamless booking experience
+- Modal closes automatically after booking or when user dismisses it
+
 ### Footer Updates
 - Added ViKrea logo (same as header)
 - Copyright text includes "Vytvorila Martina Habová"
-- Contact: lucia@vycrea.sk
+- Contact: lucia@vikrea.sk
 
 ## Environment Variables Required
 

@@ -10,7 +10,7 @@ interface ThankYouProps {
 export default function ThankYou({ onClose }: ThankYouProps) {
   const [isCalendlyOpen, setIsCalendlyOpen] = useState(false);
   
-  const calendlyUrl = import.meta.env.VITE_CALENDLY_URL || "https://calendly.com/";
+  const calendlyUrl = "https://calendly.com/vikrea";
 
   return (
     <div className="text-center space-y-8 py-12">
