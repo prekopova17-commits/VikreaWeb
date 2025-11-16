@@ -22,18 +22,18 @@ export default function Statistics() {
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 lg:gap-8 max-w-6xl mx-auto mb-16">
           {results.map((result, index) => (
             <div key={index} className="flex flex-col items-center">
-              <div className="relative w-36 h-36 lg:w-40 lg:h-40">
+              <div className="relative w-44 h-44 lg:w-48 lg:h-48">
                 <svg className="w-full h-full -rotate-90" viewBox="0 0 200 200">
                   <circle
                     cx="100"
                     cy="100"
-                    r="70"
+                    r="75"
                     fill="hsl(var(--primary))"
                   />
                   <circle
                     cx="100"
                     cy="100"
-                    r="80"
+                    r="85"
                     fill="none"
                     stroke="hsl(var(--primary))"
                     strokeWidth="20"
@@ -42,19 +42,19 @@ export default function Statistics() {
                   <circle
                     cx="100"
                     cy="100"
-                    r="80"
+                    r="85"
                     fill="none"
                     stroke="hsl(var(--mint-accent))"
                     strokeWidth="20"
-                    strokeDasharray={`${Math.PI * 160 * result.progress} ${Math.PI * 160}`}
+                    strokeDasharray={`${Math.PI * 170 * result.progress} ${Math.PI * 170}`}
                     strokeLinecap="round"
                   />
                 </svg>
                 <div className="absolute inset-0 flex flex-col items-center justify-center px-2">
-                  <div className={`${result.isSmallText ? 'text-3xl lg:text-4xl' : 'text-4xl lg:text-5xl'} font-extrabold text-white mb-1`}>
+                  <div className={`${result.isSmallText ? 'text-4xl lg:text-5xl' : 'text-5xl lg:text-6xl'} font-extrabold text-white mb-1`}>
                     {result.value}
                   </div>
-                  <div className={`${result.isSmallText ? 'text-xs' : 'text-sm'} font-semibold text-gray-300 text-center leading-tight`}>
+                  <div className={`${result.isSmallText ? 'text-sm' : 'text-base'} font-semibold text-gray-200 text-center leading-tight`}>
                     {result.label}
                   </div>
                 </div>

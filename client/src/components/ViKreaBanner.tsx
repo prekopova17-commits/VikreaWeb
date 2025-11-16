@@ -2,16 +2,16 @@ import bannerImage from "@assets/Viera Prekopova1_1763326933486.jpg";
 
 export default function ViKreaBanner() {
   return (
-    <section className="py-16 lg:py-24 bg-primary">
+    <section className="py-20 lg:py-32 bg-primary">
       <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
-        <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-16">
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-20">
           {/* Text Content - Left */}
-          <div className="flex-1 text-center lg:text-left">
-            <h2 className="text-5xl lg:text-7xl font-bold text-white mb-4" data-testid="text-banner-title">
+          <div className="flex-1 text-center lg:text-left space-y-6">
+            <h2 className="text-6xl lg:text-8xl font-black text-white tracking-tight leading-none" style={{ fontFamily: 'Inter, sans-serif' }} data-testid="text-banner-title">
               ViKrea
             </h2>
-            <p className="text-2xl lg:text-4xl font-semibold text-[hsl(var(--orange-cta))]" data-testid="text-banner-tagline">
-              Systémy. Výsledky. Žiadne výhovorky.
+            <p className="text-2xl lg:text-4xl font-bold text-[hsl(var(--orange-cta))] leading-tight tracking-wide" style={{ fontFamily: 'Inter, sans-serif' }} data-testid="text-banner-tagline">
+              Systémy. Výsledky.<br className="hidden lg:block" /> Žiadne výhovorky.
             </p>
           </div>
 

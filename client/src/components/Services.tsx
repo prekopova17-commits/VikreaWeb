@@ -96,8 +96,8 @@ export default function Services({ onAuditClick }: ServicesProps) {
                   <ul className="space-y-2">
                     {service.features.map((feature, idx) => (
                       <li key={idx} className="flex items-start gap-2">
-                        <span className="text-[hsl(var(--mint-accent))] mt-1">●</span>
-                        <span className="text-sm text-muted-foreground">{feature}</span>
+                        <span className="text-[hsl(var(--mint-accent))] leading-none">●</span>
+                        <span className="text-sm text-muted-foreground leading-relaxed">{feature}</span>
                       </li>
                     ))}
                   </ul>
