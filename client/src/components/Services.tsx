@@ -8,44 +8,55 @@ interface ServicesProps {
 
 const services = [
   {
-    name: "Audit & Konzultácia",
+    medal: "🥉",
+    name: "VSTUP — Analýza & Akčný plán",
+    price: "500–1000 €",
+    duration: "10 hodín",
     borderColor: "border-t-[hsl(var(--mint-accent))]",
-    price: "Individuálne",
     features: [
-      "Komplexný audit procesov",
-      "Identifikácia úzkych miest",
-      "Prioritizačná mapa",
-      "Odporúčania na quick wins",
-      "2-3 konzultácie"
-    ]
+      "diagnostiku celej firmy",
+      "odhalenie slabých miest",
+      "prioritizáciu krokov",
+      "akčný plán, ktorý dáva zmysel"
+    ],
+    forWho: "Firmy, ktoré potrebujú pochopiť, kde začať."
   },
   {
-    name: "Implementácia Systémov",
+    medal: "🥈",
+    name: "ROZVOJ — Mesačná spolupráca",
+    badge: "najčastejšie",
+    duration: "cca 20 pracovných dní mesačne",
+    price: "individuálne",
     borderColor: "border-t-primary",
-    price: "Projekt",
     popular: true,
     features: [
-      "Všetko z Auditu",
-      "Návrh procesov a systémov",
-      "Implementácia CRM/ERP",
-      "Nastavenie kontrolných mechanizmov",
-      "Školenie tímu",
-      "3-mesačná podpora"
-    ]
+      "všetko z balíka Vstup",
+      "implementácia odporúčaní",
+      "marketing + obchodné procesy",
+      "prepojenie oddelení",
+      "nastavenie rolí a zodpovedností",
+      "kontrola plnenia",
+      "priebežné vylepšovanie systému"
+    ],
+    forWho: "Firmy 50–100 ľudí, ktoré chcú rozvoj bez chaosu."
   },
   {
-    name: "Operačné Partnerstvo",
+    medal: "🥇",
+    name: "VIP — Dlhodobé partnerstvo",
+    subtitle: "komplexné vedenie",
+    duration: "1–3 roky",
+    price: "premium",
     borderColor: "border-t-[hsl(var(--orange-cta))]",
-    price: "Retainer",
     features: [
-      "Všetko z Implementácie",
-      "Weekly check-iny",
-      "Priama práca s tímom",
-      "Kontrola dodávateľov",
-      "Optimalizácia marží",
-      "Reporting a KPI tracking",
-      "Zostanem, dokým neuvidíme +40% zisk"
-    ]
+      "všetko z balíka Vstup",
+      "všetko z balíka Rozvoj",
+      "AI a automatizácia",
+      "B2B expanzia",
+      "onboarding a nábor",
+      "príprava firmy na odovzdanie (exit)",
+      "dlhodobé vedenie a stabilizácia"
+    ],
+    forWho: "Majitelia, ktorí chcú experta, čo firmu posunie reálne dopredu."
   }
 ];
 
@@ -54,12 +65,9 @@ export default function Services({ onAuditClick }: ServicesProps) {
     <section className="py-20 lg:py-32 bg-background">
       <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
         <div className="text-center mb-16">
-          <h2 className="text-3xl lg:text-5xl font-bold text-primary mb-4">
-            Služby
+          <h2 className="text-3xl lg:text-5xl font-bold text-primary mb-6">
+            Tri úrovne spolupráce
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            3 úrovne spolupráce podľa vašich potrieb
-          </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -71,28 +79,43 @@ export default function Services({ onAuditClick }: ServicesProps) {
             >
               {service.popular && (
                 <div className="bg-primary text-primary-foreground text-center py-2 text-sm font-semibold">
-                  Najpopulárnejšie
+                  {service.badge}
                 </div>
               )}
               <CardHeader className="pb-4">
-                <h3 className="text-2xl font-bold text-foreground">{service.name}</h3>
-                <div className="text-3xl font-extrabold text-primary mt-2">{service.price}</div>
+                <div className="text-4xl mb-3">{service.medal}</div>
+                <h3 className="text-xl lg:text-2xl font-bold text-foreground mb-1">{service.name}</h3>
+                {service.subtitle && (
+                  <p className="text-sm text-muted-foreground italic">({service.subtitle})</p>
+                )}
+                <div className="mt-4 space-y-1">
+                  <div className="text-2xl lg:text-3xl font-extrabold text-primary">{service.price}</div>
+                  <div className="text-sm text-muted-foreground font-semibold">{service.duration}</div>
+                </div>
               </CardHeader>
               <CardContent className="space-y-6">
-                <ul className="space-y-3">
-                  {service.features.map((feature, idx) => (
-                    <li key={idx} className="flex items-start gap-3">
-                      <Check className="w-5 h-5 text-[hsl(var(--mint-accent))] flex-shrink-0 mt-0.5" strokeWidth={2.5} />
-                      <span className="text-sm text-muted-foreground">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
+                <div>
+                  <p className="text-sm font-semibold text-foreground mb-3">Čo obsahuje:</p>
+                  <ul className="space-y-2">
+                    {service.features.map((feature, idx) => (
+                      <li key={idx} className="flex items-start gap-2">
+                        <span className="text-[hsl(var(--mint-accent))] mt-1">●</span>
+                        <span className="text-sm text-muted-foreground">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="pt-4 border-t border-border">
+                  <p className="text-sm font-semibold text-foreground mb-2">Pre koho:</p>
+                  <p className="text-sm text-muted-foreground italic">{service.forWho}</p>
+                </div>
                 <Button 
-                  onClick={onAuditClick}
-                  className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
+                  className="w-full bg-[hsl(var(--orange-cta))] hover:bg-[hsl(var(--orange-cta))]/90 text-white font-semibold"
+                  size="lg"
+                  asChild
                   data-testid={`button-service-${index}`}
                 >
-                  Začať
+                  <a href="mailto:lucia@vycrea.sk">Poďme si zavolať</a>
                 </Button>
               </CardContent>
             </Card>
