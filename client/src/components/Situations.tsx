@@ -24,8 +24,11 @@ export default function Situations() {
       <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
         <div className="text-center mb-16">
           <h2 className="text-3xl lg:text-5xl font-bold text-primary mb-6">
-            Majitelia firiem s 50 až 100 zamestnancami riešia tie isté bloky. Ak sa v nich vidíte, ste presne moja cieľovka.
+            Rastiete rýchlo, ale vnútri to nefunguje?
           </h2>
+          <p className="text-lg lg:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+            Majitelia firiem s 50 až 100 zamestnancami riešia tie isté bloky. Ak sa v nich vidíte, ste presne moja cieľovka.
+          </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 mb-12">
