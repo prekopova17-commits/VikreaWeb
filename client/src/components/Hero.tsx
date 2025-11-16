@@ -27,11 +27,17 @@ export default function Hero({ onAuditClick }: HeroProps) {
                   <circle
                     cx="100"
                     cy="100"
+                    r="70"
+                    fill="hsl(var(--primary))"
+                  />
+                  <circle
+                    cx="100"
+                    cy="100"
                     r="80"
                     fill="none"
                     stroke="hsl(var(--primary))"
                     strokeWidth="20"
-                    opacity="0.2"
+                    opacity="0.3"
                   />
                   <circle
                     cx="100"
@@ -46,7 +52,7 @@ export default function Hero({ onAuditClick }: HeroProps) {
                 </svg>
                 <div className="absolute inset-0 flex flex-col items-center justify-center">
                   <div className="text-5xl lg:text-6xl font-extrabold text-white mb-1">+40%</div>
-                  <div className="text-base font-semibold text-muted-foreground">Zisk</div>
+                  <div className="text-base font-semibold text-gray-300">Zisk</div>
                 </div>
               </div>
             </div>
@@ -57,11 +63,17 @@ export default function Hero({ onAuditClick }: HeroProps) {
                   <circle
                     cx="100"
                     cy="100"
+                    r="70"
+                    fill="hsl(var(--primary))"
+                  />
+                  <circle
+                    cx="100"
+                    cy="100"
                     r="80"
                     fill="none"
                     stroke="hsl(var(--primary))"
                     strokeWidth="20"
-                    opacity="0.2"
+                    opacity="0.3"
                   />
                   <circle
                     cx="100"
@@ -76,7 +88,7 @@ export default function Hero({ onAuditClick }: HeroProps) {
                 </svg>
                 <div className="absolute inset-0 flex flex-col items-center justify-center">
                   <div className="text-5xl lg:text-6xl font-extrabold text-white mb-1">+60%</div>
-                  <div className="text-base font-semibold text-muted-foreground">Obrat</div>
+                  <div className="text-base font-semibold text-gray-300">Obrat</div>
                 </div>
               </div>
             </div>
@@ -87,11 +99,17 @@ export default function Hero({ onAuditClick }: HeroProps) {
                   <circle
                     cx="100"
                     cy="100"
+                    r="70"
+                    fill="hsl(var(--primary))"
+                  />
+                  <circle
+                    cx="100"
+                    cy="100"
                     r="80"
                     fill="none"
                     stroke="hsl(var(--primary))"
                     strokeWidth="20"
-                    opacity="0.2"
+                    opacity="0.3"
                   />
                   <circle
                     cx="100"
@@ -106,7 +124,7 @@ export default function Hero({ onAuditClick }: HeroProps) {
                 </svg>
                 <div className="absolute inset-0 flex flex-col items-center justify-center">
                   <div className="text-5xl lg:text-6xl font-extrabold text-white mb-1">25</div>
-                  <div className="text-base font-semibold text-muted-foreground">Rokov</div>
+                  <div className="text-base font-semibold text-gray-300">Rokov</div>
                 </div>
               </div>
             </div>
