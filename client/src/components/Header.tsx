@@ -4,9 +4,9 @@ import { Button } from "@/components/ui/button";
 
 const navItems = [
   { label: "Problémy, ktoré riešim", href: "#situace" },
-  { label: "Proces spolupráce", href: "#ako-to-funguje" },
+  { label: "Ako prebieha spolupráca", href: "#ako-to-funguje" },
   { label: "Čo brzdí rast vašej firmy", href: "#audit" },
-  { label: "Spolupráca", href: "#sluzby" },
+  { label: "Služby", href: "#sluzby" },
   { label: "O mne", href: "#o-mne" },
   { label: "Kontakt", href: "#kontakt" },
 ];
@@ -44,13 +44,13 @@ export default function Header() {
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-8">
+          <nav className="hidden lg:flex items-center gap-3 xl:gap-6">
             {navItems.map((item) => (
               <a
                 key={item.href}
                 href={item.href}
                 onClick={(e) => handleNavClick(e, item.href)}
-                className="text-sm font-medium text-foreground hover:text-primary transition-colors"
+                className="text-xs xl:text-sm font-medium text-foreground hover:text-primary transition-colors whitespace-nowrap"
                 data-testid={`nav-${item.href.slice(1)}`}
               >
                 {item.label}
