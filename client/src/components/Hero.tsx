@@ -42,8 +42,7 @@ export default function Hero({ onAuditClick }: HeroProps) {
             <Button 
               onClick={onAuditClick}
               size="lg"
-              variant="outline"
-              className="border-2 border-[hsl(var(--mint-accent))] text-[hsl(var(--mint-accent))] hover:bg-[hsl(var(--mint-accent))] hover:text-white font-semibold px-8 py-6 text-lg transition-all duration-200"
+              className="bg-transparent border-2 border-[hsl(var(--mint-accent))] text-[hsl(var(--mint-accent))] hover:bg-[hsl(var(--mint-accent))] hover:text-white font-semibold px-10 py-6 text-lg transition-all duration-200"
               data-testid="button-hero-audit"
             >
               Odhaľte kritické priority

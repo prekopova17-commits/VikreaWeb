@@ -7,7 +7,7 @@ export default function Header() {
             <img 
               src="/images/logo.png"
               alt="ViKrea Logo"
-              className="h-10 lg:h-12 w-auto"
+              className="h-12 lg:h-16 w-auto"
               data-testid="img-logo"
             />
           </div>

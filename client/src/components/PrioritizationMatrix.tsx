@@ -25,7 +25,7 @@ export default function PrioritizationMatrix({ onAuditClick }: PrioritizationMat
             Prioritizačná matica
           </h2>
           <p className="text-lg lg:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            6-krokový audit odhalí, kde presne unikajú peniaze a na čo sa zamerať ako prvé.
+            10-krokový audit odhalí, kde presne unikajú peniaze a na čo sa zamerať ako prvé.
           </p>
         </div>
 
@@ -80,7 +80,7 @@ export default function PrioritizationMatrix({ onAuditClick }: PrioritizationMat
             className="bg-[hsl(var(--orange-cta))] hover:bg-[hsl(var(--orange-cta))]/90 text-white font-semibold px-10 py-6 text-lg transition-all duration-200 hover:scale-105 group"
             data-testid="button-matrix-start"
           >
-            Spustiť audit (6 minút)
+            Spustiť audit (10 minút)
             <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
           </Button>
           <p className="text-sm text-muted-foreground">
