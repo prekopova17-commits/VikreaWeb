@@ -8,7 +8,6 @@ interface ServicesProps {
 
 const services = [
   {
-    medal: "🥉",
     name: "VSTUP — Analýza & Akčný plán",
     price: "500–1000 €",
     duration: "10 hodín",
@@ -22,7 +21,6 @@ const services = [
     forWho: "Firmy, ktoré potrebujú pochopiť, kde začať."
   },
   {
-    medal: "🥈",
     name: "ROZVOJ — Mesačná spolupráca",
     badge: "najčastejšie",
     duration: "cca 20 pracovných dní mesačne",
@@ -41,7 +39,6 @@ const services = [
     forWho: "Firmy 50–100 ľudí, ktoré chcú rozvoj bez chaosu."
   },
   {
-    medal: "🥇",
     name: "VIP — Dlhodobé partnerstvo",
     subtitle: "komplexné vedenie",
     duration: "1–3 roky",
