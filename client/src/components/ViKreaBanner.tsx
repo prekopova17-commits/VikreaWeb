@@ -2,7 +2,7 @@ import bannerImage from "@assets/Viera Prekopova1_1763326933486.jpg";
 
 export default function ViKreaBanner() {
   return (
-    <section className="py-16 lg:py-24 bg-[#1E40AF]">
+    <section className="py-16 lg:py-24 bg-primary">
       <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
         <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-16">
           {/* Text Content - Left */}
