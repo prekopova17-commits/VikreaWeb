@@ -5,7 +5,12 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
           <div>
             <div className="mb-4">
-              <h3 className="font-bold text-xl mb-2">ViKrea</h3>
+              <img 
+                src="/images/logo.png"
+                alt="ViKrea Logo"
+                className="h-12 w-auto mb-4"
+                data-testid="img-footer-logo"
+              />
               <p className="text-white/90 text-base leading-relaxed mb-3">
                 Systémy. Výsledky. Žiadne výhovorky.
               </p>
@@ -49,7 +54,7 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-white/10 mt-12 pt-8 text-center text-sm text-white/50">
-          <p>&copy; {new Date().getFullYear()} ViKrea. Všetky práva vyhradené.</p>
+          <p>&copy; {new Date().getFullYear()} ViKrea. Všetky práva vyhradené. Vytvorila Martina Habová.</p>
         </div>
       </div>
     </footer>
