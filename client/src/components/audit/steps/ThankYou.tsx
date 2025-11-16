@@ -10,7 +10,7 @@ interface ThankYouProps {
 export default function ThankYou({ onClose }: ThankYouProps) {
   const [isCalendlyOpen, setIsCalendlyOpen] = useState(false);
   
-  const calendlyUrl = "https://calendly.com/vikrea";
+  const calendlyUrl = "https://calendly.com/vikrea/30min";
 
   return (
     <div className="text-center space-y-8 py-12">

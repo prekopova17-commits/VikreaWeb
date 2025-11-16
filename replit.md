@@ -205,7 +205,7 @@ Preferred communication style: Simple, everyday language.
 - User completes 6-step audit → Frontend validates with Zod schemas → POST to `/api/audit/submit` → Backend validates → Saves to Google Sheets → (TODO: Sends email with results) → Shows thank you screen
 
 ### Calendly Integration
-- "Poďme si zavolať" button opens Calendly popup modal (https://calendly.com/vikrea)
+- "Poďme si zavolať" button opens Calendly popup modal (https://calendly.com/vikrea/30min)
 - Uses react-calendly package for seamless booking experience
 - Modal closes automatically after booking or when user dismisses it
 
