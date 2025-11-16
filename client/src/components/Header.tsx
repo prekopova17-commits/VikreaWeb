@@ -3,7 +3,7 @@ import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const navItems = [
-  { label: "Situácie", href: "#situace" },
+  { label: "Problémy, ktoré riešim", href: "#situace" },
   { label: "Ako to funguje", href: "#ako-to-funguje" },
   { label: "Audit", href: "#audit" },
   { label: "Služby", href: "#sluzby" },
