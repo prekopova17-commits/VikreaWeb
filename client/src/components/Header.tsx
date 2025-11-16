@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 const navItems = [
   { label: "Problémy, ktoré riešim", href: "#situace" },
   { label: "Proces spolupráce", href: "#ako-to-funguje" },
-  { label: "Audit", href: "#audit" },
+  { label: "Čo brzdí rast vašej firmy", href: "#audit" },
   { label: "Spolupráca", href: "#sluzby" },
   { label: "O mne", href: "#o-mne" },
   { label: "Kontakt", href: "#kontakt" },
