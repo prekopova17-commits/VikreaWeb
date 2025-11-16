@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { CheckCircle2 } from "lucide-react";
 
 interface HeroProps {
   onAuditClick: () => void;
@@ -17,115 +16,14 @@ export default function Hero({ onAuditClick }: HeroProps) {
           </h1>
           
           <p className="text-lg lg:text-xl text-muted-foreground max-w-3xl mx-auto mb-12 leading-relaxed">
-            Zatiaľ neviete, čo presne treba. Ja to zistím a nastavím procesy tak, aby vaša firma konečne fungovala systémovo — krok po kroku, s kontrolou a jasným poriadkom.
+            Majitelia firiem s 50 až 100 zamestnancami. Zatiaľ neviete, čo presne treba. Ja to zistím a nastavím procesy tak, aby vaša firma konečne fungovala systémovo — krok po kroku, s kontrolou a jasným poriadkom.
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12 max-w-5xl mx-auto">
-            <div className="flex flex-col items-center">
-              <div className="relative w-48 h-48">
-                <svg className="w-full h-full -rotate-90" viewBox="0 0 200 200">
-                  <circle
-                    cx="100"
-                    cy="100"
-                    r="70"
-                    fill="hsl(var(--primary))"
-                  />
-                  <circle
-                    cx="100"
-                    cy="100"
-                    r="80"
-                    fill="none"
-                    stroke="hsl(var(--primary))"
-                    strokeWidth="20"
-                    opacity="0.3"
-                  />
-                  <circle
-                    cx="100"
-                    cy="100"
-                    r="80"
-                    fill="none"
-                    stroke="hsl(var(--mint-accent))"
-                    strokeWidth="20"
-                    strokeDasharray={`${Math.PI * 160 * 0.75} ${Math.PI * 160}`}
-                    strokeLinecap="round"
-                  />
-                </svg>
-                <div className="absolute inset-0 flex flex-col items-center justify-center">
-                  <div className="text-5xl lg:text-6xl font-extrabold text-white mb-1">+40%</div>
-                  <div className="text-base font-semibold text-gray-300">Zisk</div>
-                </div>
-              </div>
-            </div>
-
-            <div className="flex flex-col items-center">
-              <div className="relative w-48 h-48">
-                <svg className="w-full h-full -rotate-90" viewBox="0 0 200 200">
-                  <circle
-                    cx="100"
-                    cy="100"
-                    r="70"
-                    fill="hsl(var(--primary))"
-                  />
-                  <circle
-                    cx="100"
-                    cy="100"
-                    r="80"
-                    fill="none"
-                    stroke="hsl(var(--primary))"
-                    strokeWidth="20"
-                    opacity="0.3"
-                  />
-                  <circle
-                    cx="100"
-                    cy="100"
-                    r="80"
-                    fill="none"
-                    stroke="hsl(var(--mint-accent))"
-                    strokeWidth="20"
-                    strokeDasharray={`${Math.PI * 160 * 0.85} ${Math.PI * 160}`}
-                    strokeLinecap="round"
-                  />
-                </svg>
-                <div className="absolute inset-0 flex flex-col items-center justify-center">
-                  <div className="text-5xl lg:text-6xl font-extrabold text-white mb-1">+60%</div>
-                  <div className="text-base font-semibold text-gray-300">Obrat</div>
-                </div>
-              </div>
-            </div>
-
-            <div className="flex flex-col items-center">
-              <div className="relative w-48 h-48">
-                <svg className="w-full h-full -rotate-90" viewBox="0 0 200 200">
-                  <circle
-                    cx="100"
-                    cy="100"
-                    r="70"
-                    fill="hsl(var(--primary))"
-                  />
-                  <circle
-                    cx="100"
-                    cy="100"
-                    r="80"
-                    fill="none"
-                    stroke="hsl(var(--primary))"
-                    strokeWidth="20"
-                    opacity="0.3"
-                  />
-                  <circle
-                    cx="100"
-                    cy="100"
-                    r="80"
-                    fill="none"
-                    stroke="hsl(var(--mint-accent))"
-                    strokeWidth="20"
-                    strokeDasharray={`${Math.PI * 160 * 0.65} ${Math.PI * 160}`}
-                    strokeLinecap="round"
-                  />
-                </svg>
-                <div className="absolute inset-0 flex flex-col items-center justify-center">
-                  <div className="text-5xl lg:text-6xl font-extrabold text-white mb-1">25</div>
-                  <div className="text-base font-semibold text-gray-300">Rokov</div>
-                </div>
+          <div className="mb-12 max-w-4xl mx-auto">
+            <div className="aspect-[16/9] bg-muted rounded-2xl flex items-center justify-center border-2 border-dashed border-border">
+              <div className="text-center text-muted-foreground">
+                <div className="text-lg font-semibold mb-2">Photo Placeholder</div>
+                <div className="text-sm">16:9 Hero Image</div>
               </div>
             </div>
           </div>
@@ -150,20 +48,6 @@ export default function Hero({ onAuditClick }: HeroProps) {
             </Button>
           </div>
 
-          <div className="mt-12 flex flex-wrap justify-center gap-6 text-sm text-muted-foreground">
-            <div className="flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-[hsl(var(--mint-accent))]" />
-              <span>ISO 9001/14001</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-[hsl(var(--mint-accent))]" />
-              <span>25 rokov skúseností</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-[hsl(var(--mint-accent))]" />
-              <span>Preukazateľné výsledky</span>
-            </div>
-          </div>
         </div>
       </div>
     </section>

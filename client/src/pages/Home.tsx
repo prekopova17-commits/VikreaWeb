@@ -2,6 +2,7 @@ import { useState, Suspense, lazy } from "react";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import Situations from "@/components/Situations";
+import Statistics from "@/components/Statistics";
 import HowItWorks from "@/components/HowItWorks";
 import Results from "@/components/Results";
 import Services from "@/components/Services";
@@ -19,6 +20,7 @@ export default function Home() {
       <Header onAuditClick={() => setShowAudit(true)} />
       <Hero onAuditClick={() => setShowAudit(true)} />
       <Situations />
+      <Statistics />
       <HowItWorks />
       <Results />
       <Services onAuditClick={() => setShowAudit(true)} />
