@@ -119,3 +119,115 @@ Preferred communication style: Simple, everyday language.
 - Project uses ESM modules throughout (type: "module" in package.json)
 - Path aliases configured for clean imports (@/, @shared/, @assets/)
 - Custom Tailwind configuration with brand-specific colors and spacing system
+
+## Integrations & Configuration
+
+### Google Sheets Integration
+
+**Status**: ✅ Configured using Replit connector
+
+**Purpose**: Stores audit submission data from the prioritization matrix wizard.
+
+**Setup Requirements**:
+1. Google Sheets connector is enabled via Replit Connectors
+2. Environment variable `GOOGLE_SHEET_ID` must be set to your Google Sheet ID
+   - Example: `1AbC...XyZ` (found in the Sheet URL)
+3. The integration uses OAuth2 authentication managed by Replit
+4. Access token refreshes automatically via Replit's connector system
+
+**Data Structure**: The system automatically creates headers in Sheet1:
+- Čas odoslania (Timestamp)
+- Názov firmy (Company name)
+- IČO (Company registration number)
+- Veľkosť firmy (Company size: 1-20, 20-50, 50-100, 100+)
+- Procesy (Process maturity level)
+- Prepojenie oddelení (Department connection)
+- Unikajúce príležitosti (Lost opportunities - multi-select)
+- Práca s klientmi (Client work approach)
+- Delegovanie (Delegation style)
+- Rýchlosť oddelení (Department speed)
+- Ciele (Goals for next 6 months - multi-select)
+- Email (User email address)
+- GDPR súhlas (GDPR consent: Áno/Nie)
+
+**Implementation**: 
+- Backend: `server/lib/googleSheets.ts` handles Google Sheets API integration
+- API endpoint: `POST /api/audit/submit` validates and stores audit data
+- Frontend: `AuditWizard` component submits data via TanStack Query mutation
+
+### Email Delivery
+
+**Status**: ⏳ Awaiting configuration
+
+**Options**:
+1. **SendGrid** (recommended for production)
+   - User declined Replit connector setup
+   - Alternative: Set `SENDGRID_API_KEY` environment variable
+   
+2. **Nodemailer with SMTP** (alternative)
+   - Can use Gmail, Outlook, or any SMTP provider
+   - Requires: `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`
+
+**TODO**: Implement email sending once credentials are provided
+
+### Slovak Business Register (ORSR) Integration
+
+**Status**: 🔄 Mock implementation (development only)
+
+**Current**: Mock data with 6 sample Slovak companies for development/testing
+
+**Future Integration Options**:
+1. **Transparent Data API** (commercial, production-ready) - contact support@transparentdata.pl
+2. **lubosdz/parser-orsr** (open source, rate-limited to 1 req/min)
+3. **eWay-CRM ORSR API** (third-party wrapper)
+
+**Documentation**: See `ORSR_INTEGRATION.md` for detailed integration guide
+
+**API Endpoint**: `GET /api/companies/search?q={query}` - searches companies by name or IČO
+
+## Recent Changes (November 2025)
+
+### Multi-Step Audit Wizard Implementation
+- Complete 6-step wizard with progress tracking (mint #06D6A0 progress bar)
+- Step 1: Company size selection (Building icon)
+- Step 2: Processes & Systems assessment (Settings icon)
+- Step 3: Sales, Marketing, Product evaluation (TrendingUp icon, multi-select)
+- Step 4: People & Performance (Users icon)
+- Step 5: Goals for next 6 months (Target icon, multi-select)
+- Step 6: Email + GDPR consent (Mail icon)
+- Thank you screen with success message and CTA buttons
+
+### Visual Identity Updates
+- ViKrea banner: Gradient from #1E40AF (primary blue) to #06D6A0 (mint), with portrait photo
+- Prioritization Matrix section: Turquoise (#06D6A0) background
+- CTA buttons: White background with orange (#FF6B35) border on turquoise sections
+- Consistent use of orange (#FF6B35) for primary CTAs throughout wizard
+- Lucide icons (32px, mint color) for each wizard step
+
+### Data Flow
+- User completes 6-step audit → Frontend validates with Zod schemas → POST to `/api/audit/submit` → Backend validates → Saves to Google Sheets → (TODO: Sends email with results) → Shows thank you screen
+
+### Footer Updates
+- Added ViKrea logo (same as header)
+- Copyright text includes "Vytvorila Martina Habová"
+- Contact: lucia@vycrea.sk
+
+## Environment Variables Required
+
+```bash
+# Google Sheets Integration
+GOOGLE_SHEET_ID=your_spreadsheet_id_here
+
+# Email Service (choose one)
+# Option 1: SendGrid
+SENDGRID_API_KEY=your_sendgrid_api_key
+
+# Option 2: SMTP (e.g., Gmail)
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USER=your_email@gmail.com
+SMTP_PASS=your_app_specific_password
+
+# Session Management
+SESSION_SECRET=your_session_secret_here
+```

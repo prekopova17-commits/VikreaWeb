@@ -2,6 +2,8 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import type { Company } from "@shared/schema";
+import { auditResponseSchema } from "@shared/schema";
+import { appendAuditToSheet, ensureSheetHeaders } from "./lib/googleSheets";
 
 // Mock data for Slovak Business Register
 // TODO: Replace with real API integration (Transparent Data API, lubosdz/parser-orsr, or eWay-CRM ORSR)
@@ -35,6 +37,61 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Company search error:", error);
       res.status(500).json({ message: "Search failed" });
+    }
+  });
+
+  // Audit submission endpoint
+  app.post("/api/audit/submit", async (req, res) => {
+    try {
+      // Validate request body
+      const validationResult = auditResponseSchema.safeParse(req.body);
+      
+      if (!validationResult.success) {
+        return res.status(400).json({ 
+          message: "Neplatné dáta", 
+          errors: validationResult.error.errors 
+        });
+      }
+
+      const auditData = validationResult.data;
+
+      // Get spreadsheet ID from environment variable
+      const spreadsheetId = process.env.GOOGLE_SHEET_ID;
+      let timestamp = new Date().toISOString();
+      
+      if (spreadsheetId) {
+        try {
+          // Ensure headers exist in the sheet
+          await ensureSheetHeaders(spreadsheetId);
+
+          // Append audit data to Google Sheet
+          const result = await appendAuditToSheet(spreadsheetId, auditData);
+          timestamp = result.timestamp;
+          
+          console.log('✅ Audit data saved to Google Sheets for:', auditData.email);
+        } catch (error) {
+          console.error('⚠️ Failed to save to Google Sheets:', error);
+          // Continue anyway - don't fail the request if Google Sheets fails
+        }
+      } else {
+        console.warn('⚠️ GOOGLE_SHEET_ID not configured - audit data logged only');
+        console.log('📊 Audit submission:', JSON.stringify(auditData, null, 2));
+      }
+
+      // TODO: Send email with audit results
+      // This will be implemented once email service is configured
+
+      res.json({ 
+        success: true,
+        message: "Audit úspešne odoslaný",
+        timestamp,
+        note: spreadsheetId ? 'Data saved to Google Sheets' : 'Google Sheets not configured - data logged only'
+      });
+    } catch (error) {
+      console.error("Audit submission error:", error);
+      res.status(500).json({ 
+        message: "Chyba pri odosielaní auditu" 
+      });
     }
   });
 

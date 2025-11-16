@@ -10,6 +10,9 @@ import Step6 from "./steps/Step6";
 import ThankYou from "./steps/ThankYou";
 import { X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useMutation } from "@tanstack/react-query";
+import { apiRequest } from "@/lib/queryClient";
+import { useToast } from "@/hooks/use-toast";
 
 export interface AuditData {
   companySize?: string;
@@ -33,14 +36,38 @@ export default function AuditWizard({ open, onClose }: AuditWizardProps) {
   const [currentStep, setCurrentStep] = useState(1);
   const [auditData, setAuditData] = useState<AuditData>({});
   const totalSteps = 6;
+  const { toast } = useToast();
+
+  const submitMutation = useMutation({
+    mutationFn: async (data: AuditData) => {
+      const response = await apiRequest("POST", "/api/audit/submit", data);
+      return response.json();
+    },
+    onSuccess: () => {
+      setCurrentStep(7);
+      toast({
+        title: "Úspešne odoslané!",
+        description: "Vaša prioritná mapa je na ceste.",
+      });
+    },
+    onError: (error: Error) => {
+      toast({
+        title: "Chyba",
+        description: error.message || "Nepodarilo sa odoslať audit. Skúste to prosím znova.",
+        variant: "destructive",
+      });
+    },
+  });
 
   const handleNext = (data: Partial<AuditData>) => {
-    setAuditData({ ...auditData, ...data });
+    const updatedData = { ...auditData, ...data };
+    setAuditData(updatedData);
+    
     if (currentStep < totalSteps) {
       setCurrentStep(currentStep + 1);
     } else {
-      console.log('Audit submitted:', { ...auditData, ...data });
-      setCurrentStep(7);
+      // Final step - submit to backend
+      submitMutation.mutate(updatedData);
     }
   };
 
