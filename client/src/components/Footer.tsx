@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <footer className="bg-[hsl(var(--footer-dark))] text-white py-12 lg:py-16">
+    <footer id="kontakt" className="bg-[hsl(var(--footer-dark))] text-white py-12 lg:py-16">
       <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
           <div>

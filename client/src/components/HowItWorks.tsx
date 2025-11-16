@@ -33,7 +33,7 @@ const steps = [
 
 export default function HowItWorks() {
   return (
-    <section className="py-20 lg:py-32 bg-background">
+    <section id="ako-to-funguje" className="py-20 lg:py-32 bg-background">
       <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
         <div className="text-center mb-16">
           <div className="text-sm lg:text-base font-semibold text-[hsl(var(--orange-cta))] mb-4 uppercase tracking-wider">

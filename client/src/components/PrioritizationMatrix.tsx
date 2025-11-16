@@ -8,7 +8,7 @@ interface PrioritizationMatrixProps {
 
 export default function PrioritizationMatrix({ onAuditClick }: PrioritizationMatrixProps) {
   return (
-    <section className="bg-[hsl(var(--mint-accent))]">
+    <section id="audit" className="bg-[hsl(var(--mint-accent))]">
       <div className="container mx-auto px-4">
         <div className="max-w-[640px] mx-auto text-center pt-24 pb-16">
           <h1 className="text-[42px] font-bold text-white mb-8 leading-tight">

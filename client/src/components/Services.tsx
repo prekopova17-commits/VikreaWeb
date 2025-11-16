@@ -64,7 +64,7 @@ export default function Services({ onAuditClick }: ServicesProps) {
   const calendlyUrl = "https://calendly.com/vikrea/30min";
 
   return (
-    <section className="py-20 lg:py-32 bg-background">
+    <section id="sluzby" className="py-20 lg:py-32 bg-background">
       <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
         <div className="text-center mb-16">
           <h2 className="text-3xl lg:text-5xl font-bold text-primary mb-6">

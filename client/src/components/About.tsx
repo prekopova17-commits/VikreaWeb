@@ -9,7 +9,7 @@ const highlights = [
 
 export default function About() {
   return (
-    <section className="py-20 lg:py-32 bg-background">
+    <section id="o-mne" className="py-20 lg:py-32 bg-background">
       <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
         <div className="mb-12">
           <h2 className="text-3xl lg:text-5xl font-bold text-primary mb-6 text-center">
