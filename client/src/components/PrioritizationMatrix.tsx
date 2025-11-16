@@ -52,7 +52,7 @@ export default function PrioritizationMatrix({ onAuditClick }: PrioritizationMat
             Zistite, čo brzdí rast vašej firmy
           </h1>
           <p className="text-xl text-white/90 mb-8">
-            9 otázok. 3 minúty. Jasná mapa priorít vo vašej emailovej schránke.
+            6 otázok. 3 minúty. Jasná mapa priorít vo vašej emailovej schránke.
           </p>
           
           <div className="mb-8 relative">
