@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { TrendingUp, Target, CheckCircle2 } from "lucide-react";
+import { CheckCircle2 } from "lucide-react";
 
 interface HeroProps {
   onAuditClick: () => void;
@@ -20,34 +20,94 @@ export default function Hero({ onAuditClick }: HeroProps) {
             Zatiaľ neviete, čo presne treba. Ja to zistím a nastavím procesy tak, aby vaša firma konečne fungovala systémovo — krok po kroku, s kontrolou a jasným poriadkom.
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12 max-w-4xl mx-auto">
-            <div className="flex flex-col items-center gap-3">
-              <div className="w-16 h-16 rounded-lg bg-[hsl(var(--orange-cta))]/10 flex items-center justify-center">
-                <TrendingUp className="w-8 h-8 text-[hsl(var(--orange-cta))]" strokeWidth={2.5} />
-              </div>
-              <div>
-                <div className="text-5xl lg:text-6xl font-extrabold text-[hsl(var(--orange-cta))] mb-1">+40%</div>
-                <div className="text-sm lg:text-base font-semibold text-muted-foreground">Zisk</div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12 max-w-5xl mx-auto">
+            <div className="flex flex-col items-center">
+              <div className="relative w-48 h-48">
+                <svg className="w-full h-full -rotate-90" viewBox="0 0 200 200">
+                  <circle
+                    cx="100"
+                    cy="100"
+                    r="80"
+                    fill="none"
+                    stroke="hsl(var(--primary))"
+                    strokeWidth="20"
+                    opacity="0.2"
+                  />
+                  <circle
+                    cx="100"
+                    cy="100"
+                    r="80"
+                    fill="none"
+                    stroke="hsl(var(--mint-accent))"
+                    strokeWidth="20"
+                    strokeDasharray={`${Math.PI * 160 * 0.75} ${Math.PI * 160}`}
+                    strokeLinecap="round"
+                  />
+                </svg>
+                <div className="absolute inset-0 flex flex-col items-center justify-center">
+                  <div className="text-5xl lg:text-6xl font-extrabold text-white mb-1">+40%</div>
+                  <div className="text-base font-semibold text-muted-foreground">Zisk</div>
+                </div>
               </div>
             </div>
 
-            <div className="flex flex-col items-center gap-3">
-              <div className="w-16 h-16 rounded-lg bg-[hsl(var(--orange-cta))]/10 flex items-center justify-center">
-                <Target className="w-8 h-8 text-[hsl(var(--orange-cta))]" strokeWidth={2.5} />
-              </div>
-              <div>
-                <div className="text-5xl lg:text-6xl font-extrabold text-[hsl(var(--orange-cta))] mb-1">+60%</div>
-                <div className="text-sm lg:text-base font-semibold text-muted-foreground">Obrat</div>
+            <div className="flex flex-col items-center">
+              <div className="relative w-48 h-48">
+                <svg className="w-full h-full -rotate-90" viewBox="0 0 200 200">
+                  <circle
+                    cx="100"
+                    cy="100"
+                    r="80"
+                    fill="none"
+                    stroke="hsl(var(--primary))"
+                    strokeWidth="20"
+                    opacity="0.2"
+                  />
+                  <circle
+                    cx="100"
+                    cy="100"
+                    r="80"
+                    fill="none"
+                    stroke="hsl(var(--mint-accent))"
+                    strokeWidth="20"
+                    strokeDasharray={`${Math.PI * 160 * 0.85} ${Math.PI * 160}`}
+                    strokeLinecap="round"
+                  />
+                </svg>
+                <div className="absolute inset-0 flex flex-col items-center justify-center">
+                  <div className="text-5xl lg:text-6xl font-extrabold text-white mb-1">+60%</div>
+                  <div className="text-base font-semibold text-muted-foreground">Obrat</div>
+                </div>
               </div>
             </div>
 
-            <div className="flex flex-col items-center gap-3">
-              <div className="w-16 h-16 rounded-lg bg-primary/10 flex items-center justify-center">
-                <CheckCircle2 className="w-8 h-8 text-primary" strokeWidth={2.5} />
-              </div>
-              <div>
-                <div className="text-5xl lg:text-6xl font-extrabold text-primary mb-1">25</div>
-                <div className="text-sm lg:text-base font-semibold text-muted-foreground">Rokov</div>
+            <div className="flex flex-col items-center">
+              <div className="relative w-48 h-48">
+                <svg className="w-full h-full -rotate-90" viewBox="0 0 200 200">
+                  <circle
+                    cx="100"
+                    cy="100"
+                    r="80"
+                    fill="none"
+                    stroke="hsl(var(--primary))"
+                    strokeWidth="20"
+                    opacity="0.2"
+                  />
+                  <circle
+                    cx="100"
+                    cy="100"
+                    r="80"
+                    fill="none"
+                    stroke="hsl(var(--mint-accent))"
+                    strokeWidth="20"
+                    strokeDasharray={`${Math.PI * 160 * 0.65} ${Math.PI * 160}`}
+                    strokeLinecap="round"
+                  />
+                </svg>
+                <div className="absolute inset-0 flex flex-col items-center justify-center">
+                  <div className="text-5xl lg:text-6xl font-extrabold text-white mb-1">25</div>
+                  <div className="text-base font-semibold text-muted-foreground">Rokov</div>
+                </div>
               </div>
             </div>
           </div>
