@@ -6,7 +6,7 @@ export default function Footer() {
           <div>
             <div className="mb-4">
               <img 
-                src="/images/vikrea-logo-light.png"
+                src="/images/vikrea-logo-dark.png"
                 alt="ViKrea Logo"
                 className="h-12 w-auto mb-4"
                 data-testid="img-footer-logo"
