@@ -183,6 +183,49 @@ Preferred communication style: Simple, everyday language.
 
 ## Recent Changes (November 2025)
 
+### Security Hardening (November 16, 2025)
+**Production-Ready Security Implementation**
+
+1. **CORS Protection**
+   - Environment-aware CORS middleware with production origin whitelisting
+   - Automatically allows `.replit.app` and `.repl.co` domains
+   - Configurable via `ALLOWED_ORIGINS` environment variable
+   - Credentials support enabled for session management
+
+2. **Rate Limiting**
+   - API endpoints: 100 requests per 15 minutes per IP
+   - Audit submissions: 5 submissions per hour per IP (prevents abuse)
+   - Slovak error messages for better UX
+   - Uses `express-rate-limit` with IP-based tracking
+
+3. **HTTP Security Headers (Helmet.js)**
+   - Environment-aware Content Security Policy:
+     - **Production**: Strict CSP with no `unsafe-inline`/`unsafe-eval` for scripts
+     - **Development**: Allows HMR-required directives for Vite
+   - Configured for Calendly integration (calendly.com, assets.calendly.com)
+   - Google Fonts support (fonts.googleapis.com, fonts.gstatic.com)
+   - XSS protection, clickjacking prevention, MIME sniffing protection
+
+4. **Dialog Accessibility**
+   - Added `VisuallyHidden` component for screen reader support
+   - `DialogTitle` and `DialogDescription` in AuditWizard for ARIA compliance
+   - Fixed `onOpenChange` handler to prevent unwanted state resets
+   - Wizard state properly maintained during multi-step progression
+
+5. **Calendly Integration Fix**
+   - Fixed all "Poďme si zavolať" buttons to use Calendly modal
+   - Previously: mailto links (bug discovered via E2E testing)
+   - Now: PopupModal from react-calendly opens at https://calendly.com/vikrea/30min
+   - Implemented across: Hero, Situations, Services, FinalCTA, ThankYou components
+   - Each component manages its own Calendly state independently
+
+6. **End-to-End Testing**
+   - Full test coverage: Homepage → Audit Wizard (6 steps) → Thank You → Calendly
+   - Verified Dialog state management (open, close, reopen)
+   - Confirmed Calendly integration on all CTAs
+   - Tested security middleware (rate limiting triggers correctly)
+   - All tests passed ✅
+
 ### Multi-Step Audit Wizard Implementation
 - Complete 6-step wizard with progress tracking (mint #06D6A0 progress bar)
 - Step 1: Company size selection (Building icon)
@@ -202,12 +245,14 @@ Preferred communication style: Simple, everyday language.
 - Lucide icons (32px, mint color) for each wizard step
 
 ### Data Flow
-- User completes 6-step audit → Frontend validates with Zod schemas → POST to `/api/audit/submit` → Backend validates → Saves to Google Sheets → (TODO: Sends email with results) → Shows thank you screen
+- User completes 6-step audit → Frontend validates with Zod schemas → POST to `/api/audit/submit` (rate limited) → Backend validates → Saves to Google Sheets → (TODO: Sends email with results) → Shows thank you screen
 
 ### Calendly Integration
-- "Poďme si zavolať" button opens Calendly popup modal (https://calendly.com/vikrea/30min)
-- Uses react-calendly package for seamless booking experience
+- "Poďme si zavolať" buttons open Calendly popup modal (https://calendly.com/vikrea/30min)
+- Uses react-calendly package (PopupModal component)
+- Implemented across all homepage sections: Hero, Situations, Services, FinalCTA, ThankYou
 - Modal closes automatically after booking or when user dismisses it
+- CSP configured to allow Calendly iframe embeds
 
 ### Footer Updates
 - Added ViKrea logo (same as header)
