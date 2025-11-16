@@ -17,7 +17,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background">
-      <Header onAuditClick={() => setShowAudit(true)} />
+      <Header />
       <Hero onAuditClick={() => setShowAudit(true)} />
       <Situations />
       <Statistics />

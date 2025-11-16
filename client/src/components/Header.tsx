@@ -1,10 +1,4 @@
-import { Button } from "@/components/ui/button";
-
-interface HeaderProps {
-  onAuditClick: () => void;
-}
-
-export default function Header({ onAuditClick }: HeaderProps) {
+export default function Header() {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border">
       <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
@@ -15,14 +9,6 @@ export default function Header({ onAuditClick }: HeaderProps) {
             </div>
             <span className="font-bold text-lg lg:text-xl text-foreground">ViKrea</span>
           </div>
-          
-          <Button 
-            onClick={onAuditClick}
-            className="bg-[hsl(var(--orange-cta))] hover:bg-[hsl(var(--orange-cta))]/90 text-white font-semibold transition-all duration-200 hover:scale-105"
-            data-testid="button-header-audit"
-          >
-            Odhaľte priority
-          </Button>
         </div>
       </div>
     </header>
