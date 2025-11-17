@@ -30,7 +30,7 @@ export async function sendAuditEmail(auditData: AuditResponse): Promise<void> {
 
   // Send email
   const info = await transporter.sendMail({
-    from: `"ViKrea - Lucia Prekopová" <${gmailUser}>`,
+    from: `"ViKrea - Viera Prekopová" <${gmailUser}>`,
     to: recipientEmail,
     subject: `✨ Výsledky auditu rastu - ${companyName}`,
     text: textContent,

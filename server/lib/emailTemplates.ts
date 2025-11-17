@@ -1,7 +1,8 @@
 import type { AuditResponse } from '@shared/schema';
+import { getTopPriorities } from './auditAnalysis';
 
 export function generateAuditEmailHtml(auditData: AuditResponse): string {
-  const companyName = auditData.company?.name || 'Vaša firma';
+  const priorities = getTopPriorities(auditData);
   
   return `
 <!DOCTYPE html>
@@ -13,175 +14,114 @@ export function generateAuditEmailHtml(auditData: AuditResponse): string {
   <style>
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      line-height: 1.6;
+      line-height: 1.7;
       color: #1a1a1a;
       max-width: 640px;
       margin: 0 auto;
       padding: 20px;
       background-color: #ffffff;
     }
-    .header {
-      background: linear-gradient(135deg, #1E40AF 0%, #1E40AF 100%);
-      color: white;
-      padding: 32px;
-      border-radius: 8px;
-      margin-bottom: 32px;
-      text-align: center;
-    }
-    .header h1 {
-      margin: 0;
-      font-size: 28px;
-      font-weight: 700;
-    }
-    .header p {
-      margin: 8px 0 0 0;
-      opacity: 0.95;
+    .greeting {
       font-size: 16px;
-    }
-    .section {
-      background: #f8f9fa;
-      border-left: 4px solid #06D6A0;
-      padding: 20px;
       margin-bottom: 24px;
+      line-height: 1.7;
+    }
+    .intro {
+      font-size: 16px;
+      margin-bottom: 32px;
+      line-height: 1.7;
+    }
+    .priority {
+      background: #f8f9fa;
+      border-left: 4px solid #1E40AF;
+      padding: 20px;
+      margin-bottom: 20px;
       border-radius: 4px;
     }
-    .section h2 {
+    .priority h3 {
       color: #1E40AF;
       font-size: 18px;
       margin-top: 0;
       margin-bottom: 12px;
       font-weight: 600;
     }
-    .section p {
-      margin: 8px 0;
+    .priority p {
+      margin: 0;
       color: #4a5568;
+      font-size: 15px;
+      line-height: 1.6;
     }
-    .section ul {
-      margin: 8px 0;
-      padding-left: 20px;
-      color: #4a5568;
-    }
-    .section li {
-      margin: 4px 0;
-    }
-    .highlight {
-      background: #fff;
-      border: 2px solid #FF6B35;
-      padding: 24px;
-      border-radius: 8px;
+    .explanation {
+      font-size: 16px;
+      line-height: 1.7;
       margin: 32px 0;
-      text-align: center;
     }
-    .highlight h3 {
-      color: #FF6B35;
-      margin: 0 0 12px 0;
-      font-size: 20px;
-      font-weight: 700;
-    }
-    .highlight p {
-      margin: 8px 0;
+    .cta-section {
+      margin: 32px 0;
       font-size: 16px;
-      color: #1a1a1a;
+      line-height: 1.7;
     }
-    .cta-button {
+    .cta-link {
       display: inline-block;
-      background: #FF6B35;
-      color: white;
-      padding: 14px 32px;
+      color: #FF6B35;
       text-decoration: none;
-      border-radius: 6px;
       font-weight: 600;
-      margin-top: 16px;
+      border-bottom: 2px solid #FF6B35;
+    }
+    .cta-link:hover {
+      color: #e55a28;
+      border-bottom-color: #e55a28;
+    }
+    .signature {
       font-size: 16px;
+      margin-top: 40px;
+      line-height: 1.7;
     }
     .footer {
       text-align: center;
       padding-top: 32px;
-      margin-top: 32px;
+      margin-top: 40px;
       border-top: 2px solid #e5e7eb;
-      color: #6b7280;
-      font-size: 14px;
-    }
-    .footer p {
-      margin: 4px 0;
-    }
-    .mint-bullet {
-      color: #06D6A0;
-      font-weight: bold;
+      color: #9ca3af;
+      font-size: 13px;
     }
   </style>
 </head>
 <body>
-  <div class="header">
-    <h1>ViKrea</h1>
-    <p>Výsledky vášho auditu rastu</p>
+  <div class="greeting">
+    Dobrý deň,
   </div>
 
-  <p style="font-size: 16px; margin-bottom: 24px;">
-    Dobrý deň,<br><br>
-    Ďakujeme za vyplnenie prioritizačnej matrice pre <strong>${companyName}</strong>. 
-    Na základe vašich odpovedí sme identifikovali kľúčové oblasti, ktoré brzdia váš rast.
-  </p>
-
-  <div class="section">
-    <h2>📊 Základné informácie</h2>
-    <p><strong>Veľkosť firmy:</strong> ${auditData.companySize}</p>
-    ${auditData.company?.ico ? `<p><strong>IČO:</strong> ${auditData.company.ico}</p>` : ''}
+  <div class="intro">
+    z vašich odpovedí vyplývajú tri najkritickejšie oblasti, ktoré majú najväčší dopad na výkon firmy:
   </div>
 
-  <div class="section">
-    <h2>🔍 Oblasti na zlepšenie</h2>
-    
-    <p><strong>Úroveň procesov a systémov:</strong><br>
-    ${auditData.processes}</p>
-    
-    <p><strong>Prepojenie oddelení:</strong><br>
-    ${auditData.departments}</p>
-    
-    ${auditData.opportunities && auditData.opportunities.length > 0 ? `
-    <p><strong>Unikajúce príležitosti:</strong></p>
-    <ul>
-      ${auditData.opportunities.map(opp => `<li><span class="mint-bullet">●</span> ${opp}</li>`).join('')}
-    </ul>
-    ` : ''}
-    
-    <p><strong>Práca s klientmi:</strong><br>
-    ${auditData.clientWork}</p>
-    
-    <p><strong>Delegovanie:</strong><br>
-    ${auditData.delegation}</p>
-    
-    <p><strong>Rýchlosť oddelení:</strong><br>
-    ${auditData.departmentSpeed}</p>
+  ${priorities.map((priority, index) => `
+  <div class="priority">
+    <h3>Priorita ${index + 1}: ${priority.title}</h3>
+    <p>${priority.text}</p>
+  </div>
+  `).join('')}
+
+  <div class="explanation">
+    Tieto oblasti sú najčastejším zdrojom stagnácie alebo chaosu v malých a stredných firmách. Nie je to nič neobvyklé — dôležité je, že teraz presne viete, kde začať.
   </div>
 
-  ${auditData.goals && auditData.goals.length > 0 ? `
-  <div class="section">
-    <h2>🎯 Vaše ciele na nasledujúcich 6 mesiacov</h2>
-    <ul>
-      ${auditData.goals.map(goal => `<li><span class="mint-bullet">●</span> ${goal}</li>`).join('')}
-    </ul>
-  </div>
-  ` : ''}
-
-  <div class="highlight">
-    <h3>Ďalší krok: Osobná konzultácia</h3>
-    <p>Na základe týchto výsledkov vám pripravím konkrétne odporúčania a akčný plán.</p>
-    <p><strong>Dohodneme si 30-minútový hovor?</strong></p>
-    <a href="https://calendly.com/vikrea/30min" class="cta-button">Rezervovať si čas</a>
+  <div class="explanation">
+    Ak chcete, môžeme si to prejsť spolu. Ukážem vám, aké kroky majú najväčší efekt a ako ich nastaviť tak, aby sa systém v praxi naozaj dodržiaval.
   </div>
 
-  <p style="font-size: 16px; line-height: 1.8; margin-top: 32px;">
-    Teším sa na spoluprácu!<br><br>
-    <strong>Lucia Prekopová</strong><br>
-    ViKrea - Business Consulting<br>
-    📧 lucia@vikrea.sk<br>
-    📞 0905 400 026
-  </p>
+  <div class="cta-section">
+    → <a href="https://calendly.com/vikrea/30min" class="cta-link">Rezervovať krátky call</a>
+  </div>
+
+  <div class="signature">
+    Rada vám s tým pomôžem,<br><br>
+    Viera
+  </div>
 
   <div class="footer">
-    <p><strong>ViKrea</strong> | Systematizácia firiem, ktorá funguje v praxi</p>
-    <p>© ${new Date().getFullYear()} ViKrea. Vytvorila Martina Habová.</p>
+    <p>ViKrea | Systematizácia firiem, ktorá funguje v praxi</p>
   </div>
 </body>
 </html>
@@ -189,78 +129,32 @@ export function generateAuditEmailHtml(auditData: AuditResponse): string {
 }
 
 export function generateAuditEmailText(auditData: AuditResponse): string {
-  const companyName = auditData.company?.name || 'Vaša firma';
+  const priorities = getTopPriorities(auditData);
   
-  let text = `
-ViKrea - Výsledky vášho auditu rastu
-=====================================
+  let text = `Dobrý deň,
 
-Dobrý deň,
+z vašich odpovedí vyplývajú tri najkritickejšie oblasti, ktoré majú najväčší dopad na výkon firmy:
 
-Ďakujeme za vyplnenie prioritizačnej matrice pre ${companyName}.
-Na základe vašich odpovedí sme identifikovali kľúčové oblasti, ktoré brzdia váš rast.
-
-ZÁKLADNÉ INFORMÁCIE
--------------------
-Veľkosť firmy: ${auditData.companySize}
-${auditData.company?.ico ? `IČO: ${auditData.company.ico}` : ''}
-
-OBLASTI NA ZLEPŠENIE
---------------------
-
-Úroveň procesov a systémov:
-${auditData.processes}
-
-Prepojenie oddelení:
-${auditData.departments}
 `;
 
-  if (auditData.opportunities && auditData.opportunities.length > 0) {
-    text += `\nUnikajúce príležitosti:\n`;
-    auditData.opportunities.forEach(opp => {
-      text += `● ${opp}\n`;
-    });
-  }
+  // Add priorities
+  priorities.forEach((priority, index) => {
+    text += `PRIORITA ${index + 1}: ${priority.title}\n`;
+    text += `${priority.text}\n\n`;
+  });
 
-  text += `
-Práca s klientmi:
-${auditData.clientWork}
+  text += `Tieto oblasti sú najčastejším zdrojom stagnácie alebo chaosu v malých a stredných firmách. Nie je to nič neobvyklé — dôležité je, že teraz presne viete, kde začať.
 
-Delegovanie:
-${auditData.delegation}
+Ak chcete, môžeme si to prejsť spolu. Ukážem vám, aké kroky majú najväčší efekt a ako ich nastaviť tak, aby sa systém v praxi naozaj dodržiaval.
 
-Rýchlosť oddelení:
-${auditData.departmentSpeed}
-`;
+→ Rezervovať krátky call: https://calendly.com/vikrea/30min
 
-  if (auditData.goals && auditData.goals.length > 0) {
-    text += `\nVAŠE CIELE NA NASLEDUJÚCICH 6 MESIACOV\n`;
-    text += `--------------------------------------\n`;
-    auditData.goals.forEach(goal => {
-      text += `● ${goal}\n`;
-    });
-  }
+Rada vám s tým pomôžem,
 
-  text += `
-
-ĎALŠÍ KROK: OSOBNÁ KONZULTÁCIA
--------------------------------
-Na základe týchto výsledkov vám pripravím konkrétne odporúčania a akčný plán.
-Dohodneme si 30-minútový hovor?
-
-Rezervovať si čas: https://calendly.com/vikrea/30min
-
-Teším sa na spoluprácu!
-
-Lucia Prekopová
-ViKrea - Business Consulting
-📧 lucia@vikrea.sk
-📞 0905 400 026
+Viera
 
 ---
-ViKrea | Systematizácia firiem, ktorá funguje v praxi
-© ${new Date().getFullYear()} ViKrea. Vytvorila Martina Habová.
-  `.trim();
+ViKrea | Systematizácia firiem, ktorá funguje v praxi`;
 
   return text;
 }
