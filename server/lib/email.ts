@@ -1,6 +1,7 @@
 import nodemailer from 'nodemailer';
 import type { AuditResponse } from '@shared/schema';
 import { generateAuditEmailHtml, generateAuditEmailText } from './emailTemplates';
+import path from 'path';
 
 export async function sendAuditEmail(auditData: AuditResponse): Promise<void> {
   const gmailUser = process.env.GMAIL_USER;
@@ -28,13 +29,23 @@ export async function sendAuditEmail(auditData: AuditResponse): Promise<void> {
   const htmlContent = generateAuditEmailHtml(auditData);
   const textContent = generateAuditEmailText(auditData);
 
-  // Send email
+  // Load logo for email attachment
+  const logoPath = path.join(process.cwd(), 'attached_assets', 'vikrea-logo-light-bg (1)_1763333330925.png');
+  
+  // Send email with logo attachment
   const info = await transporter.sendMail({
     from: `"ViKrea - Viera Prekopová" <${gmailUser}>`,
     to: recipientEmail,
-    subject: `✨ Výsledky auditu rastu - ${companyName}`,
+    subject: 'Čo brzdí rast vašej firmy: tu sú vaše 3 priority',
     text: textContent,
     html: htmlContent,
+    attachments: [
+      {
+        filename: 'vikrea-logo.png',
+        path: logoPath,
+        cid: 'vikrea-logo', // Content-ID for inline image reference
+      },
+    ],
   });
 
   console.log('✅ Email sent successfully:', info.messageId);

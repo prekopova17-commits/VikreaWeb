@@ -122,7 +122,7 @@ export function generateAuditEmailHtml(auditData: AuditResponse): string {
 
   <div class="footer">
     <div style="margin-bottom: 12px;">
-      <strong style="font-size: 20px; color: #1E40AF; font-weight: 700;">ViKrea</strong>
+      <img src="cid:vikrea-logo" alt="ViKrea" style="height: 40px; width: auto;" />
     </div>
     <p style="margin: 8px 0; color: #6b7280; font-size: 14px; font-weight: 500;">
       Systémy. Výsledky. Žiadne výhovorky.
