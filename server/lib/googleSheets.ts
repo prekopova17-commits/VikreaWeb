@@ -2,6 +2,7 @@ import { google } from 'googleapis';
 import type { AuditResponse } from '@shared/schema';
 
 let connectionSettings: any;
+let cachedSpreadsheetId: string | null = null;
 
 async function getAccessToken() {
   if (connectionSettings && connectionSettings.settings.expires_at && new Date(connectionSettings.settings.expires_at).getTime() > Date.now()) {
@@ -49,6 +50,68 @@ export async function getUncachableGoogleSheetClient() {
   });
 
   return google.sheets({ version: 'v4', auth: oauth2Client });
+}
+
+// Helper function to get or create the ViKrea Audit spreadsheet
+export async function getOrCreateAuditSpreadsheet(): Promise<string> {
+  // Return cached ID if available
+  if (cachedSpreadsheetId) {
+    return cachedSpreadsheetId;
+  }
+
+  const sheets = await getUncachableGoogleSheetClient();
+  
+  // Check if GOOGLE_SHEET_ID exists and is accessible
+  const existingSheetId = process.env.GOOGLE_SHEET_ID;
+  
+  if (existingSheetId) {
+    try {
+      // Try to access it
+      await sheets.spreadsheets.get({ spreadsheetId: existingSheetId });
+      console.log('✅ Using existing spreadsheet:', existingSheetId);
+      cachedSpreadsheetId = existingSheetId;
+      return existingSheetId;
+    } catch (error: any) {
+      if (error.code === 404) {
+        console.log('⚠️ Existing spreadsheet not accessible, creating new one...');
+      } else {
+        throw error;
+      }
+    }
+  }
+  
+  // Create a new spreadsheet
+  console.log('📝 Creating new ViKrea Audit spreadsheet...');
+  
+  const response = await sheets.spreadsheets.create({
+    requestBody: {
+      properties: {
+        title: 'ViKrea Audit Submissions',
+      },
+      sheets: [{
+        properties: {
+          title: 'Sheet1',
+          gridProperties: {
+            rowCount: 1000,
+            columnCount: 13,
+          },
+        },
+      }],
+    },
+  });
+  
+  const newSpreadsheetId = response.data.spreadsheetId!;
+  console.log('✅ Created new spreadsheet:', newSpreadsheetId);
+  console.log('📋 Spreadsheet URL:', `https://docs.google.com/spreadsheets/d/${newSpreadsheetId}/edit`);
+  console.log('⚠️  IMPORTANT: Save this Spreadsheet ID to your Replit Secrets as GOOGLE_SHEET_ID to persist it across restarts!');
+  
+  // Cache the ID in memory
+  cachedSpreadsheetId = newSpreadsheetId;
+  
+  // Add headers to the new sheet
+  await ensureSheetHeaders(newSpreadsheetId);
+  
+  return newSpreadsheetId;
 }
 
 // Helper function to append audit data to Google Sheet
@@ -122,6 +185,11 @@ export async function ensureSheetHeaders(spreadsheetId: string) {
         },
       });
 
+      // Get the actual sheetId for Sheet1
+      const metadata = await sheets.spreadsheets.get({ spreadsheetId });
+      const sheet1 = metadata.data.sheets?.find(s => s.properties?.title === 'Sheet1');
+      const actualSheetId = sheet1?.properties?.sheetId ?? 0;
+
       // Format header row
       await sheets.spreadsheets.batchUpdate({
         spreadsheetId,
@@ -129,16 +197,17 @@ export async function ensureSheetHeaders(spreadsheetId: string) {
           requests: [{
             repeatCell: {
               range: {
-                sheetId: 0,
+                sheetId: actualSheetId,
                 startRowIndex: 0,
                 endRowIndex: 1,
               },
               cell: {
                 userEnteredFormat: {
                   backgroundColor: { red: 0.12, green: 0.25, blue: 0.69 }, // #1E40AF
-                  textFormat: { 
+                  textFormat: {
+                    foregroundColor: { red: 1, green: 1, blue: 1 },
+                    fontSize: 10,
                     bold: true,
-                    foregroundColor: { red: 1, green: 1, blue: 1 }
                   },
                 },
               },
@@ -147,9 +216,11 @@ export async function ensureSheetHeaders(spreadsheetId: string) {
           }],
         },
       });
+
+      console.log('✅ Headers created and formatted');
     }
   } catch (error) {
-    console.error('Error ensuring headers:', error);
+    console.error('Error ensuring sheet headers:', error);
     throw error;
   }
 }

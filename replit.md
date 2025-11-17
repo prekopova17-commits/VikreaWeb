@@ -2,9 +2,7 @@
 
 ## Overview
 
-ViKrea is a business consulting agency targeting SME companies (50-100 employees) that are experiencing growth challenges. The website serves as both a presentation platform and lead generation tool, featuring a modern one-page design with an interactive audit wizard. The primary goal is to convert visitors through a prioritization matrix mini-audit that captures email leads and provides actionable recommendations.
-
-The application is built as a single-page React application with a multi-step wizard component for lead capture, designed with a distinctive visual identity inspired by modern SaaS aesthetics (Linear typography, Stripe restraint, bold data-driven visuals).
+ViKrea is a business consulting agency targeting growing SME companies (50-100 employees). The website acts as a presentation platform and a lead generation tool. Its primary goal is to convert visitors using a prioritization matrix mini-audit that captures email leads and offers actionable recommendations. The project aims to establish ViKrea as a leader in business consulting, driving market expansion and increasing client engagement through a modern digital presence.
 
 ## User Preferences
 
@@ -12,269 +10,65 @@ Preferred communication style: Simple, everyday language.
 
 ## System Architecture
 
-### Frontend Architecture
+### Frontend
 
-**Framework**: React 18 with TypeScript, using Vite as the build tool and development server.
+The frontend is a single-page React 18 application with TypeScript, built using Vite. It uses Wouter for routing, Radix UI primitives with shadcn/ui patterns for UI components, and Tailwind CSS for styling with a custom color palette (Primary Blue, Action Orange, Growth Mint). State management is handled by React Query for server state and `useState` for local UI state, with forms managed by `react-hook-form` and Zod validation.
 
-**Routing**: Wouter for lightweight client-side routing - currently implements a simple two-route system (Home and 404).
+### Backend
 
-**UI Component System**: Radix UI primitives with shadcn/ui component patterns, configured in "new-york" style. Components follow a card-based design system with extensive use of Radix primitives for accessibility and keyboard navigation.
+The backend is an Express.js server with TypeScript, running on Node.js. It features a RESTful API structure, designed to serve both API routes and static frontend assets from a single production server. Development includes Vite middleware for HMR.
 
-**Styling Approach**: 
-- Tailwind CSS with custom configuration extending the default theme
-- CSS custom properties (CSS variables) for theming, supporting light/dark modes
-- Custom color palette defined in HSL format for Primary Blue (#1E40AF), Action Orange (#FF6B35), Growth Mint (#06D6A0)
-- Typography system using Inter font family from Google Fonts
-- Responsive breakpoints: sm (640px), md (768px), lg (1024px), xl (1280px)
+### Data Storage
 
-**State Management**: 
-- React Query (TanStack Query v5) for server state management
-- Local component state with useState for UI interactions
-- Form state managed through react-hook-form with Zod validation (via @hookform/resolvers)
-
-**Code Organization**:
-- `/client/src/components/` - Reusable UI components organized by feature
-- `/client/src/components/ui/` - Base shadcn/ui components
-- `/client/src/components/audit/` - Multi-step wizard for lead capture
-- `/client/src/pages/` - Page-level components
-- `/shared/` - Shared types and schemas between frontend and backend
-
-### Backend Architecture
-
-**Server Framework**: Express.js with TypeScript running on Node.js.
-
-**Development Mode**: Custom Vite middleware integration for HMR (Hot Module Replacement) during development. Production builds serve static files from dist/public.
-
-**API Design**: RESTful API structure (routes prefixed with `/api`), though currently minimal implementation - the application is primarily frontend-focused with placeholder storage patterns.
-
-**Session Management**: Configured for connect-pg-simple (PostgreSQL session store), indicating intent for user session persistence.
-
-**Build Process**:
-- Frontend: Vite builds React SPA to `dist/public`
-- Backend: esbuild bundles server code to `dist/index.js` as ESM module
-- Single production server serves both API routes and static frontend
-
-### Data Storage Solutions
-
-**ORM**: Drizzle ORM v0.39.1 configured for PostgreSQL with Neon serverless adapter (@neondatabase/serverless).
-
-**Database Schema** (defined in `/shared/schema.ts`):
-- `users` table with id (UUID primary key), username (unique), password fields
-- Schema validation using drizzle-zod for runtime type safety
-- Migration files stored in `/migrations/` directory
-
-**Current Implementation**: In-memory storage (MemStorage class) used as abstraction layer, allowing easy swap to database implementation. The IStorage interface defines CRUD operations (getUser, getUserByUsername, createUser).
-
-**Database Configuration**: 
-- Connection via DATABASE_URL environment variable
-- Drizzle Kit configured for schema push and migrations
-- PostgreSQL dialect specified in drizzle.config.ts
+Drizzle ORM v0.39.1 is configured for PostgreSQL with Neon serverless adapter. A `users` table is defined, and schema validation uses `drizzle-zod`. The current implementation uses an in-memory storage abstraction layer (`MemStorage`) that can be easily swapped for the database implementation.
 
 ### Authentication and Authorization
 
-**Current State**: Basic user schema defined but no active authentication implementation. The codebase includes placeholder patterns for:
-- User creation with InsertUser schema
-- User lookup by ID and username
-- Session management infrastructure (connect-pg-simple dependency)
+While basic user schema is defined and session management infrastructure is in place (via `connect-pg-simple`), full authentication and authorization features are not yet actively implemented. A storage abstraction layer (`IStorage` interface) is used to separate business logic from data persistence, facilitating future authentication integration.
 
-**Design Pattern**: Storage abstraction layer (IStorage interface) separates business logic from data persistence, enabling future authentication implementation without major refactoring.
+### UI/UX Decisions
+
+The design is inspired by modern SaaS aesthetics, featuring "Linear typography" and "Stripe restraint." It utilizes a card-based design system, responsive breakpoints, and a consistent typography system with the Inter font family. A multi-step audit wizard with a progress bar and distinct iconography guides users through the lead capture process.
+
+### Security
+
+The application includes robust security measures:
+- **CORS Protection**: Environment-aware middleware with origin whitelisting for production.
+- **Rate Limiting**: Implemented for API endpoints (100 requests/15 mins) and audit submissions (5 submissions/hour) with Slovak error messages.
+- **HTTP Security Headers**: Uses Helmet.js for XSS protection, clickjacking prevention, and MIME sniffing protection, with an environment-aware Content Security Policy (CSP) configured for production and development.
 
 ## External Dependencies
 
-### Third-Party UI Libraries
-- **Radix UI**: Comprehensive set of unstyled, accessible component primitives (@radix-ui/react-*)
-- **shadcn/ui**: Component patterns built on Radix UI with Tailwind styling
-- **Lucide React**: Icon library for consistent iconography
-- **react-calendly**: Calendly integration for booking appointments (https://calendly.com/vikrea)
-- **cmdk**: Command palette component (not currently used in UI)
-- **Embla Carousel**: Carousel/slider functionality
-- **Vaul**: Drawer component primitive
+### UI Libraries
+
+- **Radix UI**: Accessible component primitives.
+- **shadcn/ui**: Components built on Radix UI with Tailwind.
+- **Lucide React**: Icon library.
+- **react-calendly**: Calendly integration for appointment booking.
+- **Embla Carousel**: Carousel/slider functionality.
+- **Vaul**: Drawer component primitive.
 
 ### Database & Backend Services
-- **Neon Database**: Serverless PostgreSQL hosting (@neondatabase/serverless v0.10.4)
-- **Drizzle ORM**: TypeScript ORM for PostgreSQL (drizzle-orm v0.39.1, drizzle-kit for migrations)
 
-### Development Tools
-- **Vite**: Build tool and dev server with React plugin
-- **Replit Plugins**: Development tooling including runtime error overlay, cartographer, and dev banner
-- **TypeScript**: Strict mode enabled with ESNext module resolution
-- **PostCSS**: For Tailwind CSS processing
+- **Neon Database**: Serverless PostgreSQL hosting.
+- **Drizzle ORM**: TypeScript ORM for PostgreSQL.
 
 ### Form & Validation
-- **React Hook Form**: Form state management
-- **Zod**: Schema validation library
-- **@hookform/resolvers**: Integration between react-hook-form and Zod
+
+- **React Hook Form**: Form state management.
+- **Zod**: Schema validation.
+- **@hookform/resolvers**: Integration for `react-hook-form` with Zod.
+
+### Integrations
+
+- **Google Sheets**: Fully functional integration that automatically creates and updates a spreadsheet ("ViKrea Audit Submissions") with audit submission data.
+- **Gmail SMTP (Nodemailer)**: Sends formatted HTML emails with audit results to users after submission.
+- **Google Fonts**: Inter font family.
+- **Replit Connectors**: For Google Sheets API access.
 
 ### Utility Libraries
-- **clsx & tailwind-merge**: Conditional className utilities
-- **class-variance-authority**: Component variant management
-- **date-fns**: Date manipulation and formatting
-- **nanoid**: Unique ID generation
 
-### Assets & Design Resources
-- **Google Fonts**: Inter font family (weights 400, 500, 600, 700, 800)
-- **Custom Design Guidelines**: Documented in design_guidelines.md with Linear-inspired typography and Stripe-inspired restraint
-- **Visual Identity Assets**: Stored in /attached_assets/ directory including logos, generated images, and HTML moodboards
-
-### Notable Configuration
-- Project uses ESM modules throughout (type: "module" in package.json)
-- Path aliases configured for clean imports (@/, @shared/, @assets/)
-- Custom Tailwind configuration with brand-specific colors and spacing system
-
-## Integrations & Configuration
-
-### Google Sheets Integration
-
-**Status**: ✅ Configured using Replit connector
-
-**Purpose**: Stores audit submission data from the prioritization matrix wizard.
-
-**Setup Requirements**:
-1. Google Sheets connector is enabled via Replit Connectors
-2. Environment variable `GOOGLE_SHEET_ID` must be set to your Google Sheet ID
-   - Example: `1AbC...XyZ` (found in the Sheet URL)
-3. The integration uses OAuth2 authentication managed by Replit
-4. Access token refreshes automatically via Replit's connector system
-
-**Data Structure**: The system automatically creates headers in Sheet1:
-- Čas odoslania (Timestamp)
-- Názov firmy (Company name)
-- IČO (Company registration number)
-- Veľkosť firmy (Company size: 1-20, 20-50, 50-100, 100+)
-- Procesy (Process maturity level)
-- Prepojenie oddelení (Department connection)
-- Unikajúce príležitosti (Lost opportunities - multi-select)
-- Práca s klientmi (Client work approach)
-- Delegovanie (Delegation style)
-- Rýchlosť oddelení (Department speed)
-- Ciele (Goals for next 6 months - multi-select)
-- Email (User email address)
-- GDPR súhlas (GDPR consent: Áno/Nie)
-
-**Implementation**: 
-- Backend: `server/lib/googleSheets.ts` handles Google Sheets API integration
-- API endpoint: `POST /api/audit/submit` validates and stores audit data
-- Frontend: `AuditWizard` component submits data via TanStack Query mutation
-
-### Email Delivery
-
-**Status**: ⏳ Awaiting configuration
-
-**Options**:
-1. **SendGrid** (recommended for production)
-   - User declined Replit connector setup
-   - Alternative: Set `SENDGRID_API_KEY` environment variable
-   
-2. **Nodemailer with SMTP** (alternative)
-   - Can use Gmail, Outlook, or any SMTP provider
-   - Requires: `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`
-
-**TODO**: Implement email sending once credentials are provided
-
-### Slovak Business Register (ORSR) Integration
-
-**Status**: ❌ Not implemented - simplified to text input
-
-**Current**: Simple optional text input field for company name in Prioritization Matrix section
-
-**Previous Consideration**: ORSR API integration was considered but removed in favor of simplicity. User can manually enter company name.
-
-**Note**: If real ORSR integration is needed in future, see `ORSR_INTEGRATION.md` for detailed integration options (Transparent Data API, lubosdz/parser-orsr, eWay-CRM ORSR API)
-
-## Recent Changes (November 2025)
-
-### Security Hardening (November 16, 2025)
-**Production-Ready Security Implementation**
-
-1. **CORS Protection**
-   - Environment-aware CORS middleware with production origin whitelisting
-   - Automatically allows `.replit.app` and `.repl.co` domains
-   - Configurable via `ALLOWED_ORIGINS` environment variable
-   - Credentials support enabled for session management
-
-2. **Rate Limiting**
-   - API endpoints: 100 requests per 15 minutes per IP
-   - Audit submissions: 5 submissions per hour per IP (prevents abuse)
-   - Slovak error messages for better UX
-   - Uses `express-rate-limit` with IP-based tracking
-
-3. **HTTP Security Headers (Helmet.js)**
-   - Environment-aware Content Security Policy:
-     - **Production**: Strict CSP with no `unsafe-inline`/`unsafe-eval` for scripts
-     - **Development**: Allows HMR-required directives for Vite
-   - Configured for Calendly integration (calendly.com, assets.calendly.com)
-   - Google Fonts support (fonts.googleapis.com, fonts.gstatic.com)
-   - XSS protection, clickjacking prevention, MIME sniffing protection
-
-4. **Dialog Accessibility**
-   - Added `VisuallyHidden` component for screen reader support
-   - `DialogTitle` and `DialogDescription` in AuditWizard for ARIA compliance
-   - Fixed `onOpenChange` handler to prevent unwanted state resets
-   - Wizard state properly maintained during multi-step progression
-
-5. **Calendly Integration Fix**
-   - Fixed all "Poďme si zavolať" buttons to use Calendly modal
-   - Previously: mailto links (bug discovered via E2E testing)
-   - Now: PopupModal from react-calendly opens at https://calendly.com/vikrea/30min
-   - Implemented across: Hero, Situations, Services, FinalCTA, ThankYou components
-   - Each component manages its own Calendly state independently
-
-6. **End-to-End Testing**
-   - Full test coverage: Homepage → Audit Wizard (6 steps) → Thank You → Calendly
-   - Verified Dialog state management (open, close, reopen)
-   - Confirmed Calendly integration on all CTAs
-   - Tested security middleware (rate limiting triggers correctly)
-   - All tests passed ✅
-
-### Multi-Step Audit Wizard Implementation
-- Complete 6-step wizard with progress tracking (mint #06D6A0 progress bar)
-- Step 1: Company size selection (Building icon)
-- Step 2: Processes & Systems assessment (Settings icon)
-- Step 3: Sales, Marketing, Product evaluation (TrendingUp icon, multi-select)
-- Step 4: People & Performance (Users icon)
-  - Answer "Jasné SLA" changed to "Máme jasné pravidlá reakčných časov"
-- Step 5: Goals for next 6 months (Target icon, multi-select)
-- Step 6: Email + GDPR consent (Mail icon)
-- Thank you screen with success message and CTA buttons
-
-### Visual Identity Updates
-- ViKrea banner: Solid primary blue (#1E40AF) background using Inter font
-- Prioritization Matrix section: Turquoise (#06D6A0) background with simple company name input field (no ORSR integration)
-- CTA buttons: White background with orange (#FF6B35) border on turquoise sections
-- Consistent use of orange (#FF6B35) for primary CTAs throughout wizard
-- Lucide icons (32px, mint color) for each wizard step
-
-### Data Flow
-- User completes 6-step audit → Frontend validates with Zod schemas → POST to `/api/audit/submit` (rate limited) → Backend validates → Saves to Google Sheets → (TODO: Sends email with results) → Shows thank you screen
-
-### Calendly Integration
-- "Poďme si zavolať" buttons open Calendly popup modal (https://calendly.com/vikrea/30min)
-- Uses react-calendly package (PopupModal component)
-- Implemented across all homepage sections: Hero, Situations, Services, FinalCTA, ThankYou
-- Modal closes automatically after booking or when user dismisses it
-- CSP configured to allow Calendly iframe embeds
-
-### Footer Updates
-- Added ViKrea logo (same as header)
-- Copyright text includes "Vytvorila Martina Habová"
-- Contact: lucia@vikrea.sk
-
-## Environment Variables Required
-
-```bash
-# Google Sheets Integration
-GOOGLE_SHEET_ID=your_spreadsheet_id_here
-
-# Email Service (choose one)
-# Option 1: SendGrid
-SENDGRID_API_KEY=your_sendgrid_api_key
-
-# Option 2: SMTP (e.g., Gmail)
-SMTP_HOST=smtp.gmail.com
-SMTP_PORT=587
-SMTP_USER=your_email@gmail.com
-SMTP_PASS=your_app_specific_password
-
-# Session Management
-SESSION_SECRET=your_session_secret_here
-```
+- **clsx & tailwind-merge**: Conditional `className` utilities.
+- **class-variance-authority**: Component variant management.
+- **date-fns**: Date manipulation.
+- **nanoid**: Unique ID generation.

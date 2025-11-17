@@ -3,7 +3,7 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import type { Company } from "@shared/schema";
 import { auditResponseSchema } from "@shared/schema";
-import { appendAuditToSheet, ensureSheetHeaders } from "./lib/googleSheets";
+import { appendAuditToSheet, ensureSheetHeaders, getOrCreateAuditSpreadsheet } from "./lib/googleSheets";
 import { sendAuditEmail } from "./lib/email";
 
 // Mock data for Slovak Business Register
@@ -21,25 +21,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Test Google Sheets connection endpoint
   app.get("/api/test/sheets", async (req, res) => {
     try {
-      const spreadsheetId = process.env.GOOGLE_SHEET_ID;
+      console.log('Testing Google Sheets connection...');
       
-      if (!spreadsheetId) {
-        return res.status(500).json({ error: 'GOOGLE_SHEET_ID not configured' });
-      }
-
-      console.log('Testing Google Sheets access...');
-      console.log('Sheet ID:', spreadsheetId);
-      
-      const { getUncachableGoogleSheetClient } = await import('./lib/googleSheets');
-      const sheets = await getUncachableGoogleSheetClient();
-      
-      // Try to get sheet metadata
-      const metadata = await sheets.spreadsheets.get({ spreadsheetId });
+      // Get or create audit spreadsheet
+      const spreadsheetId = await getOrCreateAuditSpreadsheet();
       
       res.json({
         success: true,
-        sheetTitle: metadata.data.properties?.title,
-        sheets: metadata.data.sheets?.map(s => s.properties?.title),
+        spreadsheetId,
+        spreadsheetUrl: `https://docs.google.com/spreadsheets/d/${spreadsheetId}/edit`,
         message: 'Google Sheets connection successful!'
       });
     } catch (error: any) {
@@ -90,31 +80,28 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       const auditData = validationResult.data;
 
-      // Get spreadsheet ID from environment variable
-      const spreadsheetId = process.env.GOOGLE_SHEET_ID;
       let timestamp = new Date().toISOString();
       let googleSheetsSuccess = false;
       let emailSuccess = false;
+      let spreadsheetUrl = '';
       
       // Save to Google Sheets
-      if (spreadsheetId) {
-        try {
-          // Ensure headers exist in the sheet
-          await ensureSheetHeaders(spreadsheetId);
+      try {
+        // Get or create the audit spreadsheet
+        const spreadsheetId = await getOrCreateAuditSpreadsheet();
+        spreadsheetUrl = `https://docs.google.com/spreadsheets/d/${spreadsheetId}/edit`;
 
-          // Append audit data to Google Sheet
-          const result = await appendAuditToSheet(spreadsheetId, auditData);
-          timestamp = result.timestamp;
-          googleSheetsSuccess = true;
-          
-          console.log('✅ Audit data saved to Google Sheets for:', auditData.email);
-        } catch (error) {
-          console.error('⚠️ Failed to save to Google Sheets:', error);
-          // Continue anyway - don't fail the request if Google Sheets fails
-        }
-      } else {
-        console.warn('⚠️ GOOGLE_SHEET_ID not configured - audit data logged only');
-        console.log('📊 Audit submission:', JSON.stringify(auditData, null, 2));
+        // Append audit data to Google Sheet
+        const result = await appendAuditToSheet(spreadsheetId, auditData);
+        timestamp = result.timestamp;
+        googleSheetsSuccess = true;
+        
+        console.log('✅ Audit data saved to Google Sheets for:', auditData.email);
+        console.log('📋 Spreadsheet URL:', spreadsheetUrl);
+      } catch (error: any) {
+        console.error('⚠️ Failed to save to Google Sheets:', error);
+        console.error('Error details:', error.message);
+        // Continue anyway but log the failure clearly
       }
 
       // Send email with audit results
