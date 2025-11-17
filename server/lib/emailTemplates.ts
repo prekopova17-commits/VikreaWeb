@@ -121,7 +121,17 @@ export function generateAuditEmailHtml(auditData: AuditResponse): string {
   </div>
 
   <div class="footer">
-    <p>ViKrea | Systematizácia firiem, ktorá funguje v praxi</p>
+    <div style="margin-bottom: 12px;">
+      <strong style="font-size: 20px; color: #1E40AF; font-weight: 700;">ViKrea</strong>
+    </div>
+    <p style="margin: 8px 0; color: #6b7280; font-size: 14px; font-weight: 500;">
+      Systémy. Výsledky. Žiadne výhovorky.
+    </p>
+    <p style="margin: 16px 0 0 0;">
+      <a href="https://vikrea.sk" style="color: #1E40AF; text-decoration: none; font-weight: 600; border-bottom: 2px solid #1E40AF;">
+        vikrea.sk
+      </a>
+    </p>
   </div>
 </body>
 </html>
@@ -154,7 +164,11 @@ Rada vám s tým pomôžem,
 Viera
 
 ---
-ViKrea | Systematizácia firiem, ktorá funguje v praxi`;
+
+ViKrea
+Systémy. Výsledky. Žiadne výhovorky.
+
+Web: https://vikrea.sk`;
 
   return text;
 }
