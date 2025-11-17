@@ -78,7 +78,7 @@ export function generateAuditEmailHtml(auditData: AuditResponse): string {
       line-height: 1.7;
     }
     .footer {
-      text-align: center;
+      text-align: left;
       padding-top: 32px;
       margin-top: 40px;
       border-top: 2px solid #e5e7eb;
