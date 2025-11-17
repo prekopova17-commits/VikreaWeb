@@ -9,8 +9,8 @@ export default function PhotoPlaceholder() {
         <div className="max-w-2xl mx-auto">
           <div className="aspect-[3/4] rounded-2xl overflow-hidden">
             <img 
-              src="/images/photo-placeholder.png"
-              alt="Professional business environment"
+              src="/images/photo-placeholder.jpg"
+              alt="Viera Prekopová - ViKrea"
               className="w-full h-full object-cover"
               data-testid="img-placeholder"
             />
