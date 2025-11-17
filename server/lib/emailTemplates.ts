@@ -128,8 +128,8 @@ export function generateAuditEmailHtml(auditData: AuditResponse): string {
       Systémy. Výsledky. Žiadne výhovorky.
     </p>
     <p style="margin: 16px 0 0 0;">
-      <a href="https://vikrea.sk" style="color: #1E40AF; text-decoration: none; font-weight: 600; border-bottom: 2px solid #1E40AF;">
-        vikrea.sk
+      <a href="https://vikrea.replit.app/" style="color: #1E40AF; text-decoration: none; font-weight: 600; border-bottom: 2px solid #1E40AF;">
+        www.vikrea.sk
       </a>
     </p>
   </div>
@@ -168,7 +168,7 @@ Viera
 ViKrea
 Systémy. Výsledky. Žiadne výhovorky.
 
-Web: https://vikrea.sk`;
+Web: https://vikrea.replit.app/`;
 
   return text;
 }
