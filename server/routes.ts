@@ -18,6 +18,40 @@ const mockCompanies: Company[] = [
 ];
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Test Google Sheets connection endpoint
+  app.get("/api/test/sheets", async (req, res) => {
+    try {
+      const spreadsheetId = process.env.GOOGLE_SHEET_ID;
+      
+      if (!spreadsheetId) {
+        return res.status(500).json({ error: 'GOOGLE_SHEET_ID not configured' });
+      }
+
+      console.log('Testing Google Sheets access...');
+      console.log('Sheet ID:', spreadsheetId);
+      
+      const { getUncachableGoogleSheetClient } = await import('./lib/googleSheets');
+      const sheets = await getUncachableGoogleSheetClient();
+      
+      // Try to get sheet metadata
+      const metadata = await sheets.spreadsheets.get({ spreadsheetId });
+      
+      res.json({
+        success: true,
+        sheetTitle: metadata.data.properties?.title,
+        sheets: metadata.data.sheets?.map(s => s.properties?.title),
+        message: 'Google Sheets connection successful!'
+      });
+    } catch (error: any) {
+      console.error('Google Sheets test failed:', error);
+      res.status(500).json({
+        error: error.message,
+        code: error.code,
+        details: error.errors
+      });
+    }
+  });
+
   // Slovak Business Register search endpoint
   app.get("/api/companies/search", async (req, res) => {
     try {
