@@ -67,12 +67,14 @@ app.use(helmet({
 }));
 
 // Security: Rate limiting for API endpoints
+// Note: Disabled in development to allow testing and avoid proxy issues
 const apiLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 100, // Limit each IP to 100 requests per windowMs
   message: 'Príliš veľa požiadaviek z tejto IP adresy, skúste to prosím neskôr.',
   standardHeaders: true,
   legacyHeaders: false,
+  skip: () => isDevelopment, // Disable in development
 });
 
 const auditLimiter = rateLimit({
@@ -81,9 +83,10 @@ const auditLimiter = rateLimit({
   message: 'Príliš veľa odoslaných auditov. Skúste to prosím neskôr.',
   standardHeaders: true,
   legacyHeaders: false,
+  skip: () => isDevelopment, // Disable in development
 });
 
-// Apply rate limiting to API routes
+// Apply rate limiting to API routes (only in production)
 app.use('/api/', apiLimiter);
 app.use('/api/audit/submit', auditLimiter);
 
