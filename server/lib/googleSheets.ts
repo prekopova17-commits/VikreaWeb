@@ -1,8 +1,23 @@
 import { google } from 'googleapis';
 import type { AuditResponse } from '@shared/schema';
+import * as fs from 'fs';
+import * as path from 'path';
 
 let connectionSettings: any;
 let cachedSpreadsheetId: string | null = null;
+let spreadsheetCreationPromise: Promise<string> | null = null; // Mutex for concurrent creation
+
+const SPREADSHEET_ID_FILE = path.join(process.cwd(), '.spreadsheet_id');
+
+// Load spreadsheet ID from file on module initialization
+try {
+  if (fs.existsSync(SPREADSHEET_ID_FILE)) {
+    cachedSpreadsheetId = fs.readFileSync(SPREADSHEET_ID_FILE, 'utf-8').trim();
+    console.log('📋 Loaded persisted spreadsheet ID:', cachedSpreadsheetId);
+  }
+} catch (error) {
+  console.error('⚠️  Failed to load spreadsheet ID from file:', error);
+}
 
 async function getAccessToken() {
   if (connectionSettings && connectionSettings.settings.expires_at && new Date(connectionSettings.settings.expires_at).getTime() > Date.now()) {
@@ -59,6 +74,26 @@ export async function getOrCreateAuditSpreadsheet(): Promise<string> {
     return cachedSpreadsheetId;
   }
 
+  // If another request is already creating the spreadsheet, wait for it
+  if (spreadsheetCreationPromise) {
+    console.log('⏳ Waiting for concurrent spreadsheet creation to complete...');
+    return await spreadsheetCreationPromise;
+  }
+
+  // Start creation process and memoize the promise
+  spreadsheetCreationPromise = (async () => {
+    try {
+      return await createSpreadsheet();
+    } finally {
+      spreadsheetCreationPromise = null;
+    }
+  })();
+
+  return await spreadsheetCreationPromise;
+}
+
+// Internal function to handle actual spreadsheet creation
+async function createSpreadsheet(): Promise<string> {
   const sheets = await getUncachableGoogleSheetClient();
   
   // Check if GOOGLE_SHEET_ID exists and is accessible
@@ -103,10 +138,17 @@ export async function getOrCreateAuditSpreadsheet(): Promise<string> {
   const newSpreadsheetId = response.data.spreadsheetId!;
   console.log('✅ Created new spreadsheet:', newSpreadsheetId);
   console.log('📋 Spreadsheet URL:', `https://docs.google.com/spreadsheets/d/${newSpreadsheetId}/edit`);
-  console.log('⚠️  IMPORTANT: Save this Spreadsheet ID to your Replit Secrets as GOOGLE_SHEET_ID to persist it across restarts!');
   
   // Cache the ID in memory
   cachedSpreadsheetId = newSpreadsheetId;
+  
+  // Persist to file for future server restarts
+  try {
+    fs.writeFileSync(SPREADSHEET_ID_FILE, newSpreadsheetId, 'utf-8');
+    console.log('💾 Spreadsheet ID persisted to file for future restarts');
+  } catch (error) {
+    console.error('⚠️  Failed to persist spreadsheet ID:', error);
+  }
   
   // Add headers to the new sheet
   await ensureSheetHeaders(newSpreadsheetId);

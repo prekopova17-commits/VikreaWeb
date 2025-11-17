@@ -85,7 +85,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       let emailSuccess = false;
       let spreadsheetUrl = '';
       
-      // Save to Google Sheets
+      // Save to Google Sheets - this is critical, fail the request if it fails
       try {
         // Get or create the audit spreadsheet
         const spreadsheetId = await getOrCreateAuditSpreadsheet();
@@ -99,9 +99,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
         console.log('✅ Audit data saved to Google Sheets for:', auditData.email);
         console.log('📋 Spreadsheet URL:', spreadsheetUrl);
       } catch (error: any) {
-        console.error('⚠️ Failed to save to Google Sheets:', error);
+        console.error('❌ CRITICAL: Failed to save audit to Google Sheets:', error);
         console.error('Error details:', error.message);
-        // Continue anyway but log the failure clearly
+        
+        // Return error to user - don't silently lose data
+        return res.status(500).json({
+          success: false,
+          message: "Chyba pri ukladaní auditu do Google Sheets. Skúste to prosím znova.",
+          error: "google_sheets_save_failed"
+        });
       }
 
       // Send email with audit results
