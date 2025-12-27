@@ -41,8 +41,20 @@ export default function AuditWizard({ open, onClose }: AuditWizardProps) {
 
   const submitMutation = useMutation({
     mutationFn: async (data: AuditData) => {
-      const response = await apiRequest("POST", "/api/audit/submit", data);
-      return response.json();
+      const response = await fetch("https://hook.eu1.make.com/wzrfw7gczq31jmjnzs4dn5ptsbf4gvnt", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+      
+      if (!response.ok) {
+        throw new Error("Nepodarilo sa odoslať audit.");
+      }
+      
+      const text = await response.text();
+      return text;
     },
     onSuccess: () => {
       setCurrentStep(7);
